@@ -30,6 +30,8 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
     EditText etPrix;
     EditText etType;
     Button bSend;
+
+    UserLocalStore userLocalStore;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -51,6 +53,7 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
         bSend = (Button) findViewById(R.id.bSend);
 
         bSend.setOnClickListener(this);
+        userLocalStore = new UserLocalStore(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -72,6 +75,12 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
 
                 Food food = new Food(nomP, descriptionP, prixP,quantiteP, typeP);
                 registerFood(food);
+                break;
+            case R.id.bLogout:
+                userLocalStore.clearUserData();
+                userLocalStore.setUserLoggedIn(false);
+                Intent Intent = new Intent(this, Login.class);
+                startActivity(Intent);
                 break;
         }
     }
