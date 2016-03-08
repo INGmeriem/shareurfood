@@ -54,8 +54,9 @@ public class FoodLocalStore {
         int quantiteP = foodLocalDatabase.getInt("quantiteP", -1);
         float prixP = foodLocalDatabase.getFloat("prixP", -1);
         String typeP = foodLocalDatabase.getString("typeP", "");
+        String imgP = foodLocalDatabase.getString("imgP", "");
 
-        Food food = new Food(nomP, descriptionP, prixP, quantiteP, typeP);
+        Food food = new Food(nomP, descriptionP, prixP, imgP, quantiteP, typeP);
 
 
         return food;
