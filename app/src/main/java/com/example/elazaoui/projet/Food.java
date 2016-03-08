@@ -10,22 +10,18 @@ public class Food {
 
     String nomP;
     String descriptionP;
-    float prixP;
+    double prixP;
     String imgP;
     int quantiteP;
-    String typeP;
+    int typeP;
 
-    public Food(String nomP, String descriptionP, float prixP, String imgP, int quantiteP, String typeP) {
+    public Food(String nomP, String descriptionP, double prixP, String imgP, int quantiteP, int typeP) {
         this.nomP = nomP;
         this.descriptionP = descriptionP;
         this.prixP = prixP;
         this.imgP = imgP;
         this.quantiteP = quantiteP;
         this.typeP = typeP;
-
-
-
-
     }
 
 

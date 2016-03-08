@@ -54,6 +54,11 @@ public class ServerRequests {
         new fetchUserDataAsyncTask(user, userCallBack).execute();
     }
 
+    public void fetchFoodDataAsyncTask(Food food, GetFoodCallback foodCallback) {
+        progressDialog.show();
+        new fetchFoodDataAsyncTask(food, foodCallback).execute();
+    }
+
     /**
      * parameter sent to task upon execution progress published during
      * background computation result of the background computation
@@ -127,7 +132,7 @@ public class ServerRequests {
             dataToSend.add(new BasicNameValuePair("descriptionP", food.descriptionP));
             dataToSend.add(new BasicNameValuePair("prixP", food.prixP + ""));
             dataToSend.add(new BasicNameValuePair("quantiteP", food.quantiteP + ""));
-            dataToSend.add(new BasicNameValuePair("typeP", food.typeP));
+            dataToSend.add(new BasicNameValuePair("typeP", food.typeP + ""));
             HttpParams httpRequestParams = getHttpRequestParams();
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
@@ -161,12 +166,6 @@ public class ServerRequests {
         }
 
     }
-
-
-
-
-
-
 
     public class fetchUserDataAsyncTask extends AsyncTask<Void, Void, User> {
         User user;
@@ -224,6 +223,67 @@ public class ServerRequests {
             super.onPostExecute(returnedUser);
             progressDialog.dismiss();
             userCallBack.done(returnedUser);
+        }
+    }
+
+    public class fetchFoodDataAsyncTask extends AsyncTask<Void, Void, Food> {
+        Food food;
+        GetFoodCallback foodCallBack;
+
+        public fetchFoodDataAsyncTask(Food food, GetFoodCallback foodCallBack) {
+            this.food = food;
+            this.foodCallBack = foodCallBack;
+        }
+
+        @Override
+        protected Food doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("typeP", food.typeP + ""));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams,
+                    CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams,
+                    CONNECTION_TIMEOUT);
+
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS
+                    + "FetchFoodData.php");
+
+            Food returnedFood = null;
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                JSONObject jObject = new JSONObject(result);
+
+                if (jObject.length() != 0){
+                    Log.v("show list food", "3");
+                    String name = jObject.getString("nomP");
+                    String description = jObject.getString("descriptionP");
+                    double price = jObject.getDouble("prixP");
+                    String image = jObject.getString("imgP");
+                    int qty = jObject.getInt("quantiteP");
+                    int type = jObject.getInt("typeP");
+
+                    returnedFood = new Food(name, description, price, image, qty, type);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return returnedFood;
+        }
+
+        @Override
+        protected void onPostExecute(Food returnedFood) {
+            super.onPostExecute(returnedFood);
+            progressDialog.dismiss();
+            foodCallBack.done(returnedFood);
         }
     }
 }
