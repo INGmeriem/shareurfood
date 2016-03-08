@@ -25,9 +25,9 @@ public class FoodLocalStore {
         SharedPreferences.Editor foodLocalDatabaseEditor = foodLocalDatabase.edit();
         foodLocalDatabaseEditor.putString("nomP", food.nomP);
         foodLocalDatabaseEditor.putString("descriptionP", food.descriptionP);
-        foodLocalDatabaseEditor.putFloat("prixP", food.prixP);
+        foodLocalDatabaseEditor.putFloat("prixP", (float) food.prixP);
         foodLocalDatabaseEditor.putInt("quantiteP", food.quantiteP);
-        foodLocalDatabaseEditor.putString("typeP", food.typeP);
+        foodLocalDatabaseEditor.putInt("typeP", food.typeP);
 
         foodLocalDatabaseEditor.commit();
     }
@@ -52,12 +52,11 @@ public class FoodLocalStore {
         String nomP = foodLocalDatabase.getString("nomP", "");
         String descriptionP = foodLocalDatabase.getString("descriptionP", "");
         int quantiteP = foodLocalDatabase.getInt("quantiteP", -1);
-        float prixP = foodLocalDatabase.getFloat("prixP", -1);
-        String typeP = foodLocalDatabase.getString("typeP", "");
+        double prixP = foodLocalDatabase.getFloat("prixP", -1);
+        int typeP = foodLocalDatabase.getInt("typeP", -1);
         String imgP = foodLocalDatabase.getString("imgP", "");
 
         Food food = new Food(nomP, descriptionP, prixP, imgP, quantiteP, typeP);
-
 
         return food;
     }
