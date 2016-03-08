@@ -71,9 +71,9 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
 
 
 
-                String typeP = etType.getText().toString();
-
-                Food food = new Food(nomP, descriptionP, prixP,quantiteP, typeP);
+                int typeP = Integer.parseInt(etType.getText().toString());
+                String imgP= "test";
+                Food food = new Food(nomP, descriptionP, prixP,imgP, quantiteP, typeP);
                 registerFood(food);
                 break;
             case R.id.bLogout:

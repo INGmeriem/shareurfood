@@ -16,6 +16,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -25,6 +26,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -124,20 +129,58 @@ public class ServerRequests {
             this.food = food;
             this.foodCallBack = foodCallBack;
         }
-
+        /*CreateFood.php:
+ajouter food dans la table food
+         AddFoodPanier.php :
+ajouter food au panier    */
         @Override
         protected Void doInBackground(Void... params) {
-            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("nomP", food.nomP));
-            dataToSend.add(new BasicNameValuePair("descriptionP", food.descriptionP));
-            dataToSend.add(new BasicNameValuePair("prixP", food.prixP + ""));
-            dataToSend.add(new BasicNameValuePair("quantiteP", food.quantiteP + ""));
-            dataToSend.add(new BasicNameValuePair("typeP", food.typeP + ""));
+            try {
+                /*String username = "coco";
+                String nomP = "myplat";
+                String descriptionP = "itsgood";
+                double prixP = 6.3;
+                int fk_user = 12;
+                String imageP = "testlien";
+                int quantiteP = 5;
+                int typeP = 2;*/
+              // cette syntaxe en commentaire ne marche pas, il faut trouver une autre comme celle qui marche
+              // String link = "http://shareurfood.esy.es/CreateFood.php?username=" + username + "&nomP=" + nomP + "&descriptionP=" + descriptionP + "&prixP=" + prixP + "&fk_user=" + fk_user + "&imageP" + imageP + "&quantiteP=" + quantiteP + "&typeP=" + typeP;
+String link = "http://shareurfood.esy.es/CreateFood.php?username=%22coco%22&nomP=%22myplatandroidversionusername%22&descriptionP=%22descriptionPro%22&prixP=5&imageP=%22test%22&quantiteP=5&typeP=3";
+                URL url = new URL(link);
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(link));
+                HttpResponse response = client.execute(request);
+                BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                    break;
+                }
+                in.close();
+                System.out.println(sb.toString());
+            } catch (Exception e) {
+                return null;
+            }
+            return null;
+        }
+           /* ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("nomP", "myfood"));
+            dataToSend.add(new BasicNameValuePair("descriptionP", "i love it"));
+            dataToSend.add(new BasicNameValuePair("prixP", "5.0"));
+            dataToSend.add(new BasicNameValuePair("fk_user", "12"));
+            dataToSend.add(new BasicNameValuePair("imageP", "liencase"));
+            dataToSend.add(new BasicNameValuePair("quantiteP", "4"));
+            dataToSend.add(new BasicNameValuePair("typeP", "2"));
             HttpParams httpRequestParams = getHttpRequestParams();
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS
-                    + "Addfood.php");
+                    + "CreateFood.php");
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -147,7 +190,7 @@ public class ServerRequests {
             }
 
             return null;
-        }
+        }*/
 
         private HttpParams getHttpRequestParams() {
             HttpParams httpRequestParams = new BasicHttpParams();
