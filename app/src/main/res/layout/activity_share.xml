@@ -4,17 +4,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent" >
-
-
+    android:padding="10dp">
 
 
     <TextView
-        android:text="nom du plat"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Food name" />
 
     <EditText
         android:id="@+id/etPlat"
@@ -22,18 +20,19 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:text="Description"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Description" />
 
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <TextView
-        android:text="Quantite"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Quantity" />
 
 
     <EditText
@@ -42,9 +41,9 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:text="Prix"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Price" />
 
     <EditText
         android:id="@+id/etPrix"
@@ -52,35 +51,35 @@
         android:layout_height="wrap_content" />
 
 
-
     <TextView
-        android:text="Type"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Food type" />
 
     <EditText
         android:id="@+id/etType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-
     <Button
         android:id="@+id/bSend"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:text="Valider"
-        android:layout_height="wrap_content" />
-
-
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Valider" />
 
     <Button
         android:id="@+id/bLogout"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:text="Logout"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Logout" />
+
+    <Button
+        android:id="@+id/bBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Back" />
 
 </LinearLayout>

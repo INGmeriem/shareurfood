@@ -79,8 +79,13 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
             case R.id.bLogout:
                 userLocalStore.clearUserData();
                 userLocalStore.setUserLoggedIn(false);
-                Intent Intent = new Intent(this, Login.class);
+                Intent Intent = new Intent(Share.this, Login.class);
                 startActivity(Intent);
+                break;
+
+            case R.id.bBack:
+                Intent mainIntent = new Intent(Share.this, MainActivity.class);
+                startActivity(mainIntent);
                 break;
         }
     }

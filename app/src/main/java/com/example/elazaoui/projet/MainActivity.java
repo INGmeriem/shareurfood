@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView txtName, txtAge, txtUsername, txtAddress, txtArrondissement;
     Button bLogout;
     Button bShare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bLogout:
                 userLocalStore.clearUserData();
                 userLocalStore.setUserLoggedIn(false);
-                Intent logoutIntent = new Intent(this, Login.class);
+                Intent logoutIntent = new Intent(MainActivity.this, Login.class);
                 startActivity(logoutIntent);
                 break;
 
