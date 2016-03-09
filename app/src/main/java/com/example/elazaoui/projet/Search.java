@@ -1,7 +1,7 @@
 package com.example.elazaoui.projet;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -9,7 +9,7 @@ import android.widget.ListView;
  * Created by DUYNGUYEN on 3/9/2016.
  */
 
-public class Search extends ActionBarActivity {
+public class Search extends AppCompatActivity {
 
     ListView mListView;
     String[] foods = new String[]{

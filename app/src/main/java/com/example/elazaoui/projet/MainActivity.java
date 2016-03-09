@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView txtName, txtAge, txtUsername, txtAddress, txtArrondissement;
     Button bLogout;
     Button bShare;
+    Button bSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtAge = (TextView) findViewById(R.id.txtAge);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         //txtArrondissement = (TextView) findViewById(R.id.txtArrondissement);
+
         bLogout = (Button) findViewById(R.id.bLogout);
-
         bLogout.setOnClickListener(this);
-        bShare = (Button) findViewById(R.id.bShare);
 
+        bShare = (Button) findViewById(R.id.bShare);
         bShare.setOnClickListener(this);
+
+        bSearch = (Button) findViewById(R.id.bSearch);
+        bSearch.setOnClickListener(this);
+
         userLocalStore = new UserLocalStore(this);
 
     }
@@ -46,13 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.bLogout:
-                userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);
-                Intent logoutIntent = new Intent(MainActivity.this, Login.class);
-                startActivity(logoutIntent);
-                break;
-
             case R.id.bShare:
                 //userLocalStore.clearUserData();
                 //userLocalStore.setUserLoggedIn(false);
@@ -65,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(searchIntent);
                 break;
 
+            case R.id.bLogout:
+                userLocalStore.clearUserData();
+                userLocalStore.setUserLoggedIn(false);
+                Intent logoutIntent = new Intent(MainActivity.this, Login.class);
+                startActivity(logoutIntent);
+                break;
         }
     }
 

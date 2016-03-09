@@ -29,7 +29,10 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
     EditText etQuantite;
     EditText etPrix;
     EditText etType;
+
     Button bSend;
+    Button bLogout;
+    Button bBack;
 
     UserLocalStore userLocalStore;
     /**
@@ -51,8 +54,14 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
 
 
         bSend = (Button) findViewById(R.id.bSend);
-
         bSend.setOnClickListener(this);
+
+        bLogout = (Button) findViewById(R.id.bLogout);
+        bLogout.setOnClickListener(this);
+
+        bBack = (Button) findViewById(R.id.bBack);
+        bBack.setOnClickListener(this);
+
         userLocalStore = new UserLocalStore(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -69,13 +78,12 @@ public class Share extends AppCompatActivity implements View.OnClickListener {
 
                 float prixP = Float.parseFloat(etPrix.getText().toString());
 
-
-
                 int typeP = Integer.parseInt(etType.getText().toString());
                 String imgP= "test";
                 Food food = new Food(nomP, descriptionP, prixP,imgP, quantiteP, typeP);
                 registerFood(food);
                 break;
+
             case R.id.bLogout:
                 userLocalStore.clearUserData();
                 userLocalStore.setUserLoggedIn(false);

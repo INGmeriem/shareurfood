@@ -151,7 +151,8 @@ ajouter food au panier    */
                 imageP=imageP.replace(" ", "%20");
                 int quantiteP = food.quantiteP;
                 int typeP = food.typeP;
-String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"%22&nomP=%22"+nomP+"%22&descriptionP=%22"+descriptionP+"%22&prixP="+prixP+"&imageP=%22"+imageP+"%22&quantiteP="+quantiteP+"&typeP="+typeP+"";
+
+                String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"%22&nomP=%22"+nomP+"%22&descriptionP=%22"+descriptionP+"%22&prixP="+prixP+"&imageP=%22"+imageP+"%22&quantiteP="+quantiteP+"&typeP="+typeP+"";
                 System.out.print(link);
                 URL url = new URL(link);
                 HttpClient client = new DefaultHttpClient();
@@ -229,7 +230,7 @@ String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"
                 JSONObject jObject = new JSONObject(result);
 
                 if (jObject.length() != 0){
-                    Log.v("happened", "2");
+                    Log.v("share food", "2");
                     String name = jObject.getString("name");
                     int age = jObject.getInt("age");
                     String adresse = jObject.getString("adresse");
@@ -288,7 +289,7 @@ String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"
                 JSONObject jObject = new JSONObject(result);
 
                 if (jObject.length() != 0){
-                    Log.v("show list food", "3");
+                    Log.v("search food", "3");
                     String name = jObject.getString("nomP");
                     String description = jObject.getString("descriptionP");
                     double price = jObject.getDouble("prixP");
