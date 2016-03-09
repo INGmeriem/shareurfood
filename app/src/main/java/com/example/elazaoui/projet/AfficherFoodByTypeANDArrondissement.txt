@@ -1,0 +1,72 @@
+/*
+*************************************************
+methode à rajouter dans la class ServerRequests
+passer par paramettre arrondissement et type
+*************************************************
+*/
+	@Override
+        protected Map<Food, User> doInBackground(Void... params) {
+            try {
+                String arrodissement = "14";//passer valeur par parametre
+                String type = "1";//passer valeur par parametre
+
+                String link = "http://shareurfood.esy.es/AfficherFoodByTypeANDArrondissement.php?type="+type+"&arrondissement="+arrondissement+"";
+                System.out.print(link);
+                URL url = new URL(link);
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(link));
+                HttpResponse response = client.execute(request);
+                BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+		//il retourne une matrice en json [position][food]
+		//ex: nomarray[1]["nomP"] premier food, retourne le nomP
+		//nomarray[1]["descriptionP"] premier food, retourne la descriptionP
+		//...
+		//nomarray[2]["nomP"] deuxieme food, retourne le nomP
+		//nomarray[2]["descriptionP"] deuxieme food, retourne la descriptionP
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                    break;
+                }
+                in.close();
+                System.out.println(sb.toString());
+            } catch (Exception e) {
+                return null;
+            }
+            Map<Food, User> map = new HashMap<Food, User>();
+            try {
+		JSONArray jsonarray = new JSONArray(sb.toString());
+		for (int i = 1; i < jsonarray.length(); i++) {
+    		JSONObject jsonobject = jsonarray.getJSONObject(i);
+                  if (jObject.length() != 0){
+                    Log.v("Show food", "4");
+			String nomP = jsonobject.getString("nomP");
+			String descriptionP = jsonobject.getString("descriptionP");
+			double prixP = jsonobject.getDouble("prixP");
+			String imageP = jsonobject.getString("nomP");
+			String quantiteP = jsonobject.getString("descriptionP");
+			double typeP = jsonobject.getDouble("prixP");
+
+			String name = jsonobject.getString("name");
+                    	int age = jsonobject.getInt("age");
+			String usernameU = jsonobject.getString("username");
+			String passwordU = jsonobject.getString("password");
+                    	String adresse = jsonobject.getString("adresse");
+                    	String arrondissement = jsonobject.getString("arrondissement");
+
+                    	returnedFood = new Food(nomP, descriptionP, prixP, imageP, quantiteP, typeP);
+                    	returnedUser = new User(name, age, usernameU,passwordU,adresse, arrondissement);
+
+			map.put(returnedFood,returnedUser);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return map;
+
+        }
