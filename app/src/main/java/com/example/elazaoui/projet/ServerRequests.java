@@ -8,6 +8,7 @@ package com.example.elazaoui.projet;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -37,12 +38,14 @@ public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
     public static final String SERVER_ADDRESS = "http://shareurfood.esy.es/";
+    private Session session;//global variable
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Processing...");
         progressDialog.setMessage("Please wait...");
+        session = new Session(context); //in oncreate
     }
 
     public void storeUserDataInBackground(User user, GetUserCallback userCallBack) {
@@ -137,7 +140,8 @@ ajouter food au panier    */
         protected Void doInBackground(Void... params) {
             try {
                 //sil existe un string avec des espaces on rajoute la fonction replace :)
-                String username = "coco";
+                //String username = "coco";
+                String username = session.getusername();
                 String nomP = food.nomP;
                 nomP=nomP.replace(" ", "%20");
                 String descriptionP = food.descriptionP;
@@ -231,6 +235,7 @@ String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"
                     String adresse = jObject.getString("adresse");
                     String arrondissement = jObject.getString("arrondissement");
                     returnedUser = new User(name, age, user.username,user.password,adresse, arrondissement);
+                    session.setusername(user.username + "");
                 }
 
             } catch (Exception e) {

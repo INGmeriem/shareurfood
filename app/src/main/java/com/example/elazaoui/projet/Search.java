@@ -8,7 +8,7 @@ import android.widget.ListView;
 /**
  * Created by DUYNGUYEN on 3/9/2016.
  */
-public class ShowFood extends ActionBarActivity {
+class ShowFood extends ActionBarActivity {
 
     ListView mListView;
     String[] foods = new String[]{
