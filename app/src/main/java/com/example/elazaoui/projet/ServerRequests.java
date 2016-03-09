@@ -89,6 +89,7 @@ public class ServerRequests {
             dataToSend.add(new BasicNameValuePair("password", user.password));
             dataToSend.add(new BasicNameValuePair("age", user.age + ""));
             dataToSend.add(new BasicNameValuePair("adresse", user.adresse));
+            dataToSend.add(new BasicNameValuePair("arrondissement", user.arrondissement));
             HttpParams httpRequestParams = getHttpRequestParams();
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
