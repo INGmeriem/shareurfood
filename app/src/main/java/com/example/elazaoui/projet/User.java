@@ -25,6 +25,18 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", arrondissement='" + arrondissement + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public User(String username, String password) {
         this("", -1, username, password, "","");
     }

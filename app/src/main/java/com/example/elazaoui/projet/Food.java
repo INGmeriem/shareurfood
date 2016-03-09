@@ -24,6 +24,16 @@ public class Food {
         this.typeP = typeP;
     }
 
-
+    @Override
+    public String toString() {
+        return "Food{" +
+                "nomP='" + nomP + '\'' +
+                ", descriptionP='" + descriptionP + '\'' +
+                ", prixP=" + prixP +
+                ", imgP='" + imgP + '\'' +
+                ", quantiteP=" + quantiteP +
+                ", typeP=" + typeP +
+                '}';
+    }
 }
 
