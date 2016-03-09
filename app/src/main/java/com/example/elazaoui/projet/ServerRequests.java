@@ -25,6 +25,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -32,6 +34,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ServerRequests {
@@ -125,7 +129,7 @@ public class ServerRequests {
     }
 
 
-    public class StoreFoodDataAsyncTask extends AsyncTask<Void, Void, Void> {
+    public class StoreFoodDataAsyncTask extends AsyncTask<Void, Void,Void> {
         Food food;
         GetFoodCallback foodCallBack;
 
@@ -155,7 +159,7 @@ ajouter food au panier    */
 
                 String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"%22&nomP=%22"+nomP+"%22&descriptionP=%22"+descriptionP+"%22&prixP="+prixP+"&imageP=%22"+imageP+"%22&quantiteP="+quantiteP+"&typeP="+typeP+"";
                 System.out.print(link);
-                URL url = new URL(link);
+                    URL url = new URL(link);
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
                 request.setURI(new URI(link));
