@@ -8,7 +8,7 @@ import android.widget.ListView;
 /**
  * Created by DUYNGUYEN on 3/9/2016.
  */
-public class ShowFood extends ActionBarActivity {
+public class Search extends ActionBarActivity {
 
     ListView mListView;
     String[] foods = new String[]{
@@ -18,11 +18,11 @@ public class ShowFood extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_showfood);
+        setContentView(R.layout.activity_search);
 
         mListView = (ListView) findViewById(R.id.listView);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShowFood.this, android.R.layout.simple_list_item_1, foods);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this, android.R.layout.simple_list_item_1, foods);
 
 
     }

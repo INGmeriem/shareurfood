@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.bSearch:
-                Intent searchIntent = new Intent(MainActivity.this, ShowFood.class);
+                Intent searchIntent = new Intent(MainActivity.this, Search.class);
                 startActivity(searchIntent);
                 break;
 
