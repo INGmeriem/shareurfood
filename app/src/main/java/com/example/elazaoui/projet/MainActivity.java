@@ -12,13 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     UserLocalStore userLocalStore;
 
-    EditText etName, etAge, etUsername, etAdresse, etArrondissement;
+    TextView txtName, txtAge, txtUsername, txtAddress, txtArrondissement;
     Button bLogout;
     Button bShare;
     @Override
@@ -26,11 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etName = (EditText) findViewById(R.id.etName);
-        etAge = (EditText) findViewById(R.id.etAge);
-        etAdresse = (EditText) findViewById(R.id.etAdresse);
-        etArrondissement = (EditText) findViewById(R.id.etArrondissement);
+        txtUsername = (TextView) findViewById(R.id.txtUsername);
+        txtName = (TextView) findViewById(R.id.txtName);
+        txtAge = (TextView) findViewById(R.id.txtAge);
+        txtAddress = (TextView) findViewById(R.id.txtAddress);
+        //txtArrondissement = (TextView) findViewById(R.id.txtArrondissement);
         bLogout = (Button) findViewById(R.id.bLogout);
 
         bLogout.setOnClickListener(this);
@@ -85,10 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void displayUserDetails() {
         User user = userLocalStore.getLoggedInUser();
-        etUsername.setText(user.username);
-        etName.setText(user.name);
-        etAge.setText(user.age + "");
-        etAdresse.setText(user.adresse);
+        txtUsername.setText(user.username);
+        txtName.setText(user.name);
+        txtAge.setText(user.age + "");
+        txtAddress.setText(user.adresse);
 
 
     }

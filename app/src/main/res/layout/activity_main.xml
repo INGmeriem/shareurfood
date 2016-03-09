@@ -4,74 +4,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent" >
+    android:padding="10dp">
 
     <TextView
-        android:text="Username"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="WELCOME..."
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp" />
 
     <TextView
-        android:text="Name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Username" />
 
     <TextView
-        android:text="Age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/etAge"
+        android:id="@+id/txtUsername"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
     <TextView
-        android:text="Adresse"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Name" />
 
-    <EditText
-        android:id="@+id/etAdresse"
+    <TextView
+        android:id="@+id/txtName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age" />
 
+    <TextView
+        android:id="@+id/txtAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address" />
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
 
     <Button
         android:id="@+id/bShare"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:text="Share ur Food"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Share ur Food" />
+
     <Button
         android:id="@+id/bSearch"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:text="Search for Food"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Search for Food" />
 
 
     <Button
         android:id="@+id/bLogout"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:text="Logout"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Logout" />
 
 </LinearLayout>
