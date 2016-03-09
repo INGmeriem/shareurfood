@@ -47,15 +47,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bLogout:
                 userLocalStore.clearUserData();
                 userLocalStore.setUserLoggedIn(false);
-                Intent Intent = new Intent(this, Login.class);
-                startActivity(Intent);
+                Intent logoutIntent = new Intent(this, Login.class);
+                startActivity(logoutIntent);
                 break;
 
             case R.id.bShare:
-                userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);
+                //userLocalStore.clearUserData();
+                //userLocalStore.setUserLoggedIn(false);
                 Intent shareIntent = new Intent(MainActivity.this, Share.class);
                 startActivity(shareIntent);
+                break;
+
+            case R.id.bSearch:
+                Intent searchIntent = new Intent(MainActivity.this, ShowFood.class);
+                startActivity(searchIntent);
                 break;
 
         }
