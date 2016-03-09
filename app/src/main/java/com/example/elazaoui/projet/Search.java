@@ -24,7 +24,6 @@ public class Search extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listView);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this, android.R.layout.simple_list_item_1, foods);
-
-
+        mListView.setAdapter(adapter);
     }
 }
