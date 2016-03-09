@@ -136,17 +136,19 @@ ajouter food au panier    */
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                /*String username = "coco";
-                String nomP = "myplat";
-                String descriptionP = "itsgood";
-                double prixP = 6.3;
-                int fk_user = 12;
-                String imageP = "testlien";
-                int quantiteP = 5;
-                int typeP = 2;*/
-              // cette syntaxe en commentaire ne marche pas, il faut trouver une autre comme celle qui marche
-              // String link = "http://shareurfood.esy.es/CreateFood.php?username=" + username + "&nomP=" + nomP + "&descriptionP=" + descriptionP + "&prixP=" + prixP + "&fk_user=" + fk_user + "&imageP" + imageP + "&quantiteP=" + quantiteP + "&typeP=" + typeP;
-String link = "http://shareurfood.esy.es/CreateFood.php?username=%22coco%22&nomP=%22myplatandroidversionusername%22&descriptionP=%22descriptionPro%22&prixP=5&imageP=%22test%22&quantiteP=5&typeP=3";
+                //sil existe un string avec des espaces on rajoute la fonction replace :)
+                String username = "coco";
+                String nomP = food.nomP;
+                nomP=nomP.replace(" ", "%20");
+                String descriptionP = food.descriptionP;
+                descriptionP=descriptionP.replace(" ", "%20");
+                double prixP = food.prixP;
+                String imageP = food.imgP;
+                imageP=imageP.replace(" ", "%20");
+                int quantiteP = food.quantiteP;
+                int typeP = food.typeP;
+String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"%22&nomP=%22"+nomP+"%22&descriptionP=%22"+descriptionP+"%22&prixP="+prixP+"&imageP=%22"+imageP+"%22&quantiteP="+quantiteP+"&typeP="+typeP+"";
+                System.out.print(link);
                 URL url = new URL(link);
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -168,29 +170,6 @@ String link = "http://shareurfood.esy.es/CreateFood.php?username=%22coco%22&nomP
             }
             return null;
         }
-           /* ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("nomP", "myfood"));
-            dataToSend.add(new BasicNameValuePair("descriptionP", "i love it"));
-            dataToSend.add(new BasicNameValuePair("prixP", "5.0"));
-            dataToSend.add(new BasicNameValuePair("fk_user", "12"));
-            dataToSend.add(new BasicNameValuePair("imageP", "liencase"));
-            dataToSend.add(new BasicNameValuePair("quantiteP", "4"));
-            dataToSend.add(new BasicNameValuePair("typeP", "2"));
-            HttpParams httpRequestParams = getHttpRequestParams();
-
-            HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS
-                    + "CreateFood.php");
-
-            try {
-                post.setEntity(new UrlEncodedFormEntity(dataToSend));
-                client.execute(post);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }*/
 
         private HttpParams getHttpRequestParams() {
             HttpParams httpRequestParams = new BasicHttpParams();
