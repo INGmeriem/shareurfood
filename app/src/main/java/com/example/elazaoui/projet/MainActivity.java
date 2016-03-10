@@ -8,10 +8,11 @@ package com.example.elazaoui.projet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -24,10 +25,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button bShare;
     Button bSearch;
 
+    private CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         txtName = (TextView) findViewById(R.id.txtName);
