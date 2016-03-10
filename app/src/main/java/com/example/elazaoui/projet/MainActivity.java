@@ -7,10 +7,13 @@ package com.example.elazaoui.projet;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,16 +28,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button bShare;
     Button bSearch;
 
-    private CoordinatorLayout coordinatorLayout;
+    private static final int MENU_ITEM_LOGOUT = 1001;
+
+    private static String email = "nhbduy.iot@gmail.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
-
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Send an email
+                String[] addresses = {email};
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Information request");
+                intent.putExtra(Intent.EXTRA_TEXT, "Please send some information!");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
 
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         txtName = (TextView) findViewById(R.id.txtName);
@@ -85,6 +103,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (authenticate() == true) {
             displayUserDetails();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        menu.add(0, MENU_ITEM_LOGOUT, 1001, R.string.logout);
+
+        return true;
     }
 
     private boolean authenticate() {
