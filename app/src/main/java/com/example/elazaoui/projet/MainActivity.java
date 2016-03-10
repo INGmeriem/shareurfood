@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
+        //coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         txtName = (TextView) findViewById(R.id.txtName);
