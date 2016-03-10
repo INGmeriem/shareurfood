@@ -35,5 +35,29 @@ public class Food {
                 ", typeP=" + typeP +
                 '}';
     }
+
+    public String getNomP() {
+        return nomP;
+    }
+
+    public String getDescriptionP() {
+        return descriptionP;
+    }
+
+    public double getPrixP() {
+        return prixP;
+    }
+
+    public String getImgP() {
+        return imgP;
+    }
+
+    public int getQuantiteP() {
+        return quantiteP;
+    }
+
+    public int getTypeP() {
+        return typeP;
+    }
 }
 
