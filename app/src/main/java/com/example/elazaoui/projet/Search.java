@@ -2,6 +2,8 @@ package com.example.elazaoui.projet;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -9,7 +11,9 @@ import android.widget.ListView;
  * Created by DUYNGUYEN on 3/9/2016.
  */
 
-public class Search extends AppCompatActivity {
+public class Search extends BaseActivity {
+
+    private static final int MENU_ITEM_LOGOUT = 1001;
 
     ListView mListView;
     String[] foods = new String[]{
@@ -26,10 +30,20 @@ public class Search extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this, android.R.layout.simple_list_item_1, foods);
         mListView.setAdapter(adapter);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
-
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

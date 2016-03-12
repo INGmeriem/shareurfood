@@ -23,7 +23,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
-public class Share extends AppCompatActivity implements View.OnClickListener {
+public class Share extends BaseActivity implements View.OnClickListener {
     EditText etPlat;
     EditText etDescription;
     EditText etQuantite;

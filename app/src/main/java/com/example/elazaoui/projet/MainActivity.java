@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     UserLocalStore userLocalStore;
 
@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button bLogout;
     Button bShare;
     Button bSearch;
-
-    private static final int MENU_ITEM_LOGOUT = 1001;
 
     private RelativeLayout relativeLayout;
 
@@ -79,54 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         userLocalStore = new UserLocalStore(this);
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        menu.add(0, MENU_ITEM_LOGOUT, 1001, R.string.logout);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_settings:
-                Snackbar.make(relativeLayout,
-                        "You selected settings", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Toast.makeText(this, "You selected settings", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.action_about:
-                //Intent intent = new Intent(this, AboutActivity.class);
-                //startActivity(intent);
-                return true;
-            case R.id.action_account:
-                //Go to my account
-                /*Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
-                if (webIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(webIntent);
-                }*/
-                //Intent intent = new Intent(this, AccountActivity.class);
-                //startActivity(intent);
-                return true;
-            case R.id.action_cart:
-                Toast.makeText(this, "You selected the Shopping Cart", Toast.LENGTH_LONG).show();
-                return true;
-            case MENU_ITEM_LOGOUT:
-                /*Snackbar.make(relativeLayout,
-                        "You selected Logout", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                Toast.makeText(this, "You selected Logout", Toast.LENGTH_LONG).show();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
