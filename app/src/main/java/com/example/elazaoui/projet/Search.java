@@ -25,5 +25,11 @@ public class Search extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this, android.R.layout.simple_list_item_1, foods);
         mListView.setAdapter(adapter);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+
     }
 }

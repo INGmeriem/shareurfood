@@ -11,12 +11,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -30,12 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int MENU_ITEM_LOGOUT = 1001;
 
+    private RelativeLayout relativeLayout;
+
     private static String email = "nhbduy.iot@gmail.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        relativeLayout = (RelativeLayout) findViewById(R.id.relativelayout);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +82,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        menu.add(0, MENU_ITEM_LOGOUT, 1001, R.string.logout);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_settings:
+                Snackbar.make(relativeLayout,
+                        "You selected settings", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Toast.makeText(this, "You selected settings", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_about:
+                //Intent intent = new Intent(this, AboutActivity.class);
+                //startActivity(intent);
+                return true;
+            case R.id.action_account:
+                //Go to my account
+                /*Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+                if (webIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(webIntent);
+                }*/
+                //Intent intent = new Intent(this, AccountActivity.class);
+                //startActivity(intent);
+                return true;
+            case R.id.action_cart:
+                Toast.makeText(this, "You selected the Shopping Cart", Toast.LENGTH_LONG).show();
+                return true;
+            case MENU_ITEM_LOGOUT:
+                /*Snackbar.make(relativeLayout,
+                        "You selected Logout", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Toast.makeText(this, "You selected Logout", Toast.LENGTH_LONG).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.bShare:
@@ -103,16 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (authenticate() == true) {
             displayUserDetails();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        menu.add(0, MENU_ITEM_LOGOUT, 1001, R.string.logout);
-
-        return true;
     }
 
     private boolean authenticate() {
