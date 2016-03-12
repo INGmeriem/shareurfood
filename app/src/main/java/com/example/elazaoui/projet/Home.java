@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class Home extends BaseActivity implements View.OnClickListener{
 
     UserLocalStore userLocalStore;
 
@@ -85,19 +85,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.bShare:
                 //userLocalStore.clearUserData();
                 //userLocalStore.setUserLoggedIn(false);
-                Intent shareIntent = new Intent(MainActivity.this, Share.class);
+                Intent shareIntent = new Intent(Home.this, Share.class);
                 startActivity(shareIntent);
                 break;
 
             case R.id.bSearch:
-                Intent searchIntent = new Intent(MainActivity.this, Search.class);
+                Intent searchIntent = new Intent(Home.this, Search.class);
                 startActivity(searchIntent);
                 break;
 
             case R.id.bLogout:
                 userLocalStore.clearUserData();
                 userLocalStore.setUserLoggedIn(false);
-                Intent logoutIntent = new Intent(MainActivity.this, Login.class);
+                Intent logoutIntent = new Intent(Home.this, Login.class);
                 startActivity(logoutIntent);
                 break;
         }
