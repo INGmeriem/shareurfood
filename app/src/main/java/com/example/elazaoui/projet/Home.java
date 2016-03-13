@@ -37,17 +37,6 @@ public class Home extends BaseActivity implements OnClickListener {
 
     private static String MY_EMAIL = "nhbduy.iot@gmail.com";
 
-    private ProgressDialog pDialog;
-
-    JSONParser jsonParser = new JSONParser();
-
-    private static final String HOME_URL = "http://shareurfood.nguyenhoangbaoduy.info/showinfouser.php";
-
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
-
-    private ArrayList<String> infoUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +51,7 @@ public class Home extends BaseActivity implements OnClickListener {
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_EMAIL, addresses);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Information request");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "{ShareUrFood] Contact request");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please send some information!");
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
@@ -88,9 +77,8 @@ public class Home extends BaseActivity implements OnClickListener {
         bSearch = (Button) findViewById(R.id.bSearch);
         bSearch.setOnClickListener(this);
 
-
+        //load default SharedPreferences to TextView
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(Home.this);
-
         user.setText(sp.getString("username", null));
         name.setText(sp.getString("name", null));
         age.setText(sp.getString("age", null));
@@ -115,6 +103,10 @@ public class Home extends BaseActivity implements OnClickListener {
                 break;
 
             case R.id.bLogout:
+                //Clear all data cached in SharedPreferences when logout
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(Home.this);
+                sp.edit().clear().commit();
+
                 Intent logoutIntent = new Intent(Home.this, Login.class);
                 startActivity(logoutIntent);
                 break;
