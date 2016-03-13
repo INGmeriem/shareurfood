@@ -6,10 +6,12 @@ package com.example.elazaoui.projet;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -21,10 +23,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Register extends Activity implements OnClickListener{
+public class Register extends Activity implements OnClickListener {
 
     private EditText user, pass, name, age, address, postalCode, email, phone;
-    private Button  mRegister;
+    private Button mRegister;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -56,16 +58,16 @@ public class Register extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        user = (EditText)findViewById(R.id.etUsernameR);
-        pass = (EditText)findViewById(R.id.etPasswordR);
-        name = (EditText)findViewById(R.id.etName);
-        age = (EditText)findViewById(R.id.etAge);
-        address = (EditText)findViewById(R.id.etAddress);
-        postalCode = (EditText)findViewById(R.id.etPostalCode);
-        email = (EditText)findViewById(R.id.etEmail);
-        phone = (EditText)findViewById(R.id.etPhone);
+        user = (EditText) findViewById(R.id.etUsernameR);
+        pass = (EditText) findViewById(R.id.etPasswordR);
+        name = (EditText) findViewById(R.id.etName);
+        age = (EditText) findViewById(R.id.etAge);
+        address = (EditText) findViewById(R.id.etAddress);
+        postalCode = (EditText) findViewById(R.id.etPostalCode);
+        email = (EditText) findViewById(R.id.etEmail);
+        phone = (EditText) findViewById(R.id.etPhone);
 
-        mRegister = (Button)findViewById(R.id.bRegister);
+        mRegister = (Button) findViewById(R.id.bRegister);
         mRegister.setOnClickListener(this);
 
     }
@@ -91,7 +93,7 @@ public class Register extends Activity implements OnClickListener{
 
         /**
          * Before starting background thread Show Progress Dialog
-         * */
+         */
         boolean failure = false;
 
         @Override
@@ -145,7 +147,7 @@ public class Register extends Activity implements OnClickListener{
                     Log.d("User Created!", json.toString());
                     finish();
                     return json.getString(TAG_MESSAGE);
-                }else{
+                } else {
                     Log.d("Register Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
 
@@ -157,13 +159,14 @@ public class Register extends Activity implements OnClickListener{
             return null;
 
         }
+
         /**
          * After completing background task Dismiss the progress dialog
-         * **/
+         **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once product deleted
             pDialog.dismiss();
-            if (file_url != null){
+            if (file_url != null) {
                 Toast.makeText(Register.this, file_url, Toast.LENGTH_LONG).show();
             }
 

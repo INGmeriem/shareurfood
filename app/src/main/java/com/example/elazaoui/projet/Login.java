@@ -142,14 +142,32 @@ public class Login extends Activity implements OnClickListener {
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
+
+                    //get info user logged in
+                    JSONObject user = json.getJSONObject("user");
+                    String name = user.getString("name");
+                    String age = user.getString("age");
+                    String address = user.getString("address");
+                    String postalcode = user.getString("postalcode");
+                    String email = user.getString("email");
+                    String phone = user.getString("phone");
+
                     // save user data
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(Login.this);
                     SharedPreferences.Editor edit = sp.edit();
+
                     edit.putString("username", username);
+                    edit.putString("name", name);
+                    edit.putString("age", age);
+                    edit.putString("address", address);
+                    edit.putString("postalcode", postalcode);
+                    edit.putString("email", email);
+                    edit.putString("phone", phone);
+
                     edit.commit();
 
-                    Intent i = new Intent(Login.this, MainActivity.class);
+                    Intent i = new Intent(Login.this, Home.class);
                     finish();
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);

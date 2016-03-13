@@ -5,50 +5,60 @@ package com.example.elazaoui.projet;
  */
 
 
-
-import android.content.Intent;
+import android.app.ProgressDialog;
+import android.content.Intent;;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Home extends BaseActivity implements View.OnClickListener{
+import java.util.ArrayList;
+import java.util.List;
 
-    UserLocalStore userLocalStore;
 
-    TextView txtName, txtAge, txtUsername, txtAddress, txtArrondissement;
-    Button bLogout;
-    Button bShare;
-    Button bSearch;
+public class Home extends BaseActivity implements OnClickListener {
 
-    private RelativeLayout relativeLayout;
+    private TextView name, age, user, address, postalcode, phone, email;
+    private Button bLogout, bShare, bSearch;
 
-    private static String email = "nhbduy.iot@gmail.com";
+    private static String MY_EMAIL = "nhbduy.iot@gmail.com";
+
+    private ProgressDialog pDialog;
+
+    JSONParser jsonParser = new JSONParser();
+
+    private static final String HOME_URL = "http://shareurfood.nguyenhoangbaoduy.info/showinfouser.php";
+
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
+
+    private ArrayList<String> infoUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        relativeLayout = (RelativeLayout) findViewById(R.id.relativelayout);
+        setContentView(R.layout.activity_home);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Send an email
-                String[] addresses = {email};
+                String[] addresses = {MY_EMAIL};
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_EMAIL, addresses);
@@ -60,11 +70,14 @@ public class Home extends BaseActivity implements View.OnClickListener{
             }
         });
 
-        txtUsername = (TextView) findViewById(R.id.txtUsername);
-        txtName = (TextView) findViewById(R.id.txtName);
-        txtAge = (TextView) findViewById(R.id.txtAge);
-        txtAddress = (TextView) findViewById(R.id.txtAddress);
-        //txtArrondissement = (TextView) findViewById(R.id.txtArrondissement);
+
+        user = (TextView) findViewById(R.id.txtUsername);
+        name = (TextView) findViewById(R.id.txtName);
+        age = (TextView) findViewById(R.id.txtAge);
+        address = (TextView) findViewById(R.id.txtAddress);
+        postalcode = (TextView) findViewById(R.id.txtPostalCode);
+        email = (TextView) findViewById(R.id.txtEmail);
+        phone = (TextView) findViewById(R.id.txtPhone);
 
         bLogout = (Button) findViewById(R.id.bLogout);
         bLogout.setOnClickListener(this);
@@ -75,16 +88,23 @@ public class Home extends BaseActivity implements View.OnClickListener{
         bSearch = (Button) findViewById(R.id.bSearch);
         bSearch.setOnClickListener(this);
 
-        userLocalStore = new UserLocalStore(this);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(Home.this);
+
+        user.setText(sp.getString("username", null));
+        name.setText(sp.getString("name", null));
+        age.setText(sp.getString("age", null));
+        address.setText(sp.getString("address", null));
+        postalcode.setText(sp.getString("postalcode", null));
+        email.setText(sp.getString("email", null));
+        phone.setText(sp.getString("phone", null));
 
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.bShare:
-                //userLocalStore.clearUserData();
-                //userLocalStore.setUserLoggedIn(false);
                 Intent shareIntent = new Intent(Home.this, Share.class);
                 startActivity(shareIntent);
                 break;
@@ -95,39 +115,14 @@ public class Home extends BaseActivity implements View.OnClickListener{
                 break;
 
             case R.id.bLogout:
-                userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);
                 Intent logoutIntent = new Intent(Home.this, Login.class);
                 startActivity(logoutIntent);
+                break;
+
+            default:
                 break;
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (authenticate() == true) {
-            displayUserDetails();
-        }
-    }
-
-    private boolean authenticate() {
-        if (userLocalStore.getLoggedInUser() == null) {
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-            return false;
-        }
-        return true;
-    }
-
-    private void displayUserDetails() {
-        User user = userLocalStore.getLoggedInUser();
-        txtUsername.setText(user.username);
-        txtName.setText(user.name);
-        txtAge.setText(user.age + "");
-        txtAddress.setText(user.adresse);
-
-
-    }
-
 }
+

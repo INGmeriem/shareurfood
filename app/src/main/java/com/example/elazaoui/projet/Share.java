@@ -92,7 +92,7 @@ public class Share extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.bBack:
-                Intent mainIntent = new Intent(Share.this, MainActivity.class);
+                Intent mainIntent = new Intent(Share.this, Home.class);
                 startActivity(mainIntent);
                 break;
         }
