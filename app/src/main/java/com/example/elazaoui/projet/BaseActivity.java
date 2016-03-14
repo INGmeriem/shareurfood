@@ -35,17 +35,10 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(this, "You selected settings", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_about:
-                //Intent intent = new Intent(this, AboutActivity.class);
-                //startActivity(intent);
+                Toast.makeText(this, "You selected the About Section", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_account:
-                //Go to my account
-                /*Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
-                if (webIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(webIntent);
-                }*/
-                //Intent intent = new Intent(this, AccountActivity.class);
-                //startActivity(intent);
+                Toast.makeText(this, "You selected the Account Management Section", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_cart:
                 Toast.makeText(this, "You selected the Shopping Cart", Toast.LENGTH_LONG).show();
