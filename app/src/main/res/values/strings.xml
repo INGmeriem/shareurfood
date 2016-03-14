@@ -9,6 +9,7 @@
     <string name="title_activity_register">ShareUrFood - Register</string>
     <string name="title_activity_share">ShareUrFood - Share</string>
     <string name="title_activity_search">ShareUrFood - Search</string>
+    <string name="title_activity_search_detail">ShareUrFood - Search detail</string>
     <string name="title_activity_about">ShareUrFood - About</string>
     <string name="title_activity_detail">ShareUrFood - Food detail</string>
 
@@ -18,5 +19,19 @@
 
     <string name="logout">Logout</string>
     <string name="shopping_cart">Shopping Cart</string>
+
+    <string name="description_test">This is an inscription test this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test
+        this is an inscription test.</string>
 
 </resources>

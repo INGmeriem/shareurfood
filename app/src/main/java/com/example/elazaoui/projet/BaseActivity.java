@@ -1,5 +1,8 @@
 package com.example.elazaoui.projet;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,10 +51,12 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(this, "You selected the Shopping Cart", Toast.LENGTH_LONG).show();
                 return true;
             case MENU_ITEM_LOGOUT:
-                /*Snackbar.make(relativeLayout,
-                        "You selected Logout", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                Toast.makeText(this, "You selected Logout", Toast.LENGTH_LONG).show();
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(BaseActivity.this);
+                sp.edit().clear().commit();
+
+                Intent logoutIntent = new Intent(BaseActivity.this, Login.class);
+                startActivity(logoutIntent);
+
                 return true;
         }
 

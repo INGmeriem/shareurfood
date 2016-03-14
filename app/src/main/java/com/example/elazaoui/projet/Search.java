@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -132,8 +133,10 @@ public class Search extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                Intent intentFoodDetail = new Intent(Search.this, SearchDetail.class);
+                startActivity(intentFoodDetail);
 
-                Toast.makeText(Search.this, "You selected food items", Toast.LENGTH_LONG).show();
+                Toast.makeText(Search.this, "You selected food items " + id + " and " + position, Toast.LENGTH_LONG).show();
 
             }
         });
