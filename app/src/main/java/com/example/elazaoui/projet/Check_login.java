@@ -17,7 +17,7 @@ public class Check_login extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        //setContentView(R.layout.activity_login);
     }
     public void doConnect(View view) {
         EditText txtUserName = (EditText) findViewById(R.id.etUsername);

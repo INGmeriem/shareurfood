@@ -146,6 +146,8 @@ public class Login extends AppCompatActivity implements OnClickListener {
 
                     //get info user logged in
                     JSONObject user = json.getJSONObject("user");
+
+                    int id = user.getInt("id");
                     String name = user.getString("name");
                     String age = user.getString("age");
                     String address = user.getString("address");
@@ -158,6 +160,7 @@ public class Login extends AppCompatActivity implements OnClickListener {
                             .getDefaultSharedPreferences(Login.this);
                     SharedPreferences.Editor edit = sp.edit();
 
+                    edit.putInt("idU", id);
                     edit.putString("username", username);
                     edit.putString("name", name);
                     edit.putString("age", age);

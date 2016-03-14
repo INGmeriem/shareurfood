@@ -17,6 +17,13 @@ public class User {
     private String emailU;
     private String phoneU;
 
+    public User(String nameU, String usernameU, String passwordU, String postalcodeU) {
+        this.nameU = nameU;
+        this.usernameU = usernameU;
+        this.passwordU = passwordU;
+        this.postalcodeU = postalcodeU;
+    }
+
     public User(String nameU, int ageU, String usernameU, String passwordU, String addressU, String postalcodeU, String emailU, String phoneU) {
         this.nameU = nameU;
         this.ageU = ageU;

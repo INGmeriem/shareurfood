@@ -11,8 +11,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -87,6 +89,7 @@ public class Search extends BaseActivity {
                 JSONObject c = mFoods.getJSONObject(i);
 
                 //gets the content of each tag
+                int id = c.getInt("id");
                 String name = c.getString("name");
                 String description = c.getString("description");
                 String location = c.getString("postalcode");
@@ -97,6 +100,7 @@ public class Search extends BaseActivity {
                 // creating new HashMap
                 HashMap<String, String> map = new HashMap<String, String>();
 
+                map.put("id", String.valueOf(id));
                 map.put("name", name);
                 map.put("description", description);
                 map.put("location", location);
@@ -120,8 +124,8 @@ public class Search extends BaseActivity {
         //List<HashMap<String, String>> mData = GetSampleData();
 
         SimpleAdapter adapter = new SimpleAdapter(Search.this, mFoodList,
-                R.layout.activity_row_food, new String[]{"name", "description", "location",
-                "price", "image"}, new int[]{R.id.nameText, R.id.descriptionText,
+                R.layout.activity_row_food, new String[]{"id", "name", "description", "location",
+                "price", "image"}, new int[]{0, R.id.nameText, R.id.descriptionText,
                 R.id.locationText, R.id.priceText, R.id.imageView});
 
         //Set the adapter to your ListView
@@ -136,7 +140,18 @@ public class Search extends BaseActivity {
                 Intent intentFoodDetail = new Intent(Search.this, SearchDetail.class);
                 startActivity(intentFoodDetail);
 
-                Toast.makeText(Search.this, "You selected food items " + id + " and " + position, Toast.LENGTH_LONG).show();
+                String selectedFood = mFoodList.get(position).get("id");
+
+                // save user data
+                SharedPreferences sp = PreferenceManager
+                        .getDefaultSharedPreferences(Search.this);
+                SharedPreferences.Editor edit = sp.edit();
+
+                edit.putString("idF", selectedFood);
+
+                edit.commit();
+
+                Toast.makeText(Search.this, "You selected food items " + selectedFood, Toast.LENGTH_LONG).show();
 
             }
         });
