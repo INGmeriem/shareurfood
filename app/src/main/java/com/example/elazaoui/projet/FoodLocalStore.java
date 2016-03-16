@@ -23,11 +23,11 @@ public class FoodLocalStore {
 
     public void storeFoodData(Food food) {
         SharedPreferences.Editor foodLocalDatabaseEditor = foodLocalDatabase.edit();
-        foodLocalDatabaseEditor.putString("nomP", food.nomP);
-        foodLocalDatabaseEditor.putString("descriptionP", food.descriptionP);
-        foodLocalDatabaseEditor.putFloat("prixP", (float) food.prixP);
-        foodLocalDatabaseEditor.putInt("quantiteP", food.quantiteP);
-        foodLocalDatabaseEditor.putInt("typeP", food.typeP);
+        foodLocalDatabaseEditor.putString("nomP", food.getNameF());
+        foodLocalDatabaseEditor.putString("descriptionP", food.getDescriptionF());
+        foodLocalDatabaseEditor.putFloat("prixP", (float) food.getPriceF());
+        foodLocalDatabaseEditor.putInt("quantiteP", food.getQtyF());
+        foodLocalDatabaseEditor.putInt("typeP", food.getTypeF());
 
         foodLocalDatabaseEditor.commit();
     }

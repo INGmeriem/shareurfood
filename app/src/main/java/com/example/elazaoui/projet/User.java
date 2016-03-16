@@ -7,38 +7,68 @@ package com.example.elazaoui.projet;
 
 
 public class User {
+    private int idU;
+    private String nameU;
+    private int ageU;
+    private String usernameU;
+    private String passwordU;
+    private String addressU;
+    private String postalcodeU;
+    private String emailU;
+    private String phoneU;
 
-    String name, username, password;
-    String adresse;
-    String arrondissement;
-    int age;
-
-
-    public User(String name, int age, String username, String password, String adresse, String arrondissement) {
-        this.name = name;
-        this.age = age;
-        this.username = username;
-        this.password = password;
-        this.adresse = adresse;
-        this.arrondissement = arrondissement;
-
-
+    public User(String nameU, String usernameU, String passwordU, String postalcodeU) {
+        this.nameU = nameU;
+        this.usernameU = usernameU;
+        this.passwordU = passwordU;
+        this.postalcodeU = postalcodeU;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", arrondissement='" + arrondissement + '\'' +
-                ", age=" + age +
-                '}';
+    public User(String nameU, int ageU, String usernameU, String passwordU, String addressU, String postalcodeU, String emailU, String phoneU) {
+        this.nameU = nameU;
+        this.ageU = ageU;
+        this.usernameU = usernameU;
+        this.passwordU = passwordU;
+        this.addressU = addressU;
+        this.postalcodeU = postalcodeU;
+        this.emailU = emailU;
+        this.phoneU = phoneU;
     }
 
-    public User(String username, String password) {
-        this("", -1, username, password, "","");
+    public int getIdU() {
+        return idU;
+    }
+
+    public String getNameU() {
+        return nameU;
+    }
+
+    public int getAgeU() {
+        return ageU;
+    }
+
+    public String getUsernameU() {
+        return usernameU;
+    }
+
+    public String getPasswordU() {
+        return passwordU;
+    }
+
+    public String getAddressU() {
+        return addressU;
+    }
+
+    public String getPostalcodeU() {
+        return postalcodeU;
+    }
+
+    public String getEmailU() {
+        return emailU;
+    }
+
+    public String getPhoneU() {
+        return phoneU;
     }
 }
 

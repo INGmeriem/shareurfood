@@ -41,7 +41,7 @@ import java.util.Map;
 public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
-    public static final String SERVER_ADDRESS = "http://shareurfood.esy.es/";
+    public static final String SERVER_ADDRESS = "http://shareurfood.nguyenhoangbaoduy.info/";
     private Session session;//global variable
 
     public ServerRequests(Context context) {
@@ -88,12 +88,12 @@ public class ServerRequests {
         @Override
         protected Void doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("name", user.name));
-            dataToSend.add(new BasicNameValuePair("username", user.username));
-            dataToSend.add(new BasicNameValuePair("password", user.password));
-            dataToSend.add(new BasicNameValuePair("age", user.age + ""));
-            dataToSend.add(new BasicNameValuePair("adresse", user.adresse));
-            dataToSend.add(new BasicNameValuePair("arrondissement", user.arrondissement));
+            dataToSend.add(new BasicNameValuePair("name", user.getNameU()));
+            dataToSend.add(new BasicNameValuePair("username", user.getUsernameU()));
+            dataToSend.add(new BasicNameValuePair("password", user.getPasswordU()));
+            dataToSend.add(new BasicNameValuePair("age", user.getAgeU() + ""));
+            dataToSend.add(new BasicNameValuePair("adresse", user.getAddressU()));
+            dataToSend.add(new BasicNameValuePair("arrondissement", user.getPostalcodeU()));
             HttpParams httpRequestParams = getHttpRequestParams();
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
@@ -147,17 +147,17 @@ ajouter food au panier    */
                 //sil existe un string avec des espaces on rajoute la fonction replace :)
                 //String username = "coco";
                 String username = session.getusername();
-                String nomP = food.nomP;
+                String nomP = food.getNameF();
                 nomP=nomP.replace(" ", "%20");
-                String descriptionP = food.descriptionP;
+                String descriptionP = food.getDescriptionF();
                 descriptionP=descriptionP.replace(" ", "%20");
-                double prixP = food.prixP;
-                String imageP = food.imgP;
+                double prixP = food.getPriceF();
+                String imageP = food.getImageF();
                 imageP=imageP.replace(" ", "%20");
-                int quantiteP = food.quantiteP;
-                int typeP = food.typeP;
+                int quantiteP = food.getQtyF();
+                int typeP = food.getTypeF();
 
-                String link = "http://shareurfood.esy.es/CreateFood.php?username=%22"+username+"%22&nomP=%22"+nomP+"%22&descriptionP=%22"+descriptionP+"%22&prixP="+prixP+"&imageP=%22"+imageP+"%22&quantiteP="+quantiteP+"&typeP="+typeP+"";
+                String link = "http://shareurfood.nguyenhoangbaoduy.info/CreateFood.php?username=%22"+username+"%22&nomP=%22"+nomP+"%22&descriptionP=%22"+descriptionP+"%22&prixP="+prixP+"&imageP=%22"+imageP+"%22&quantiteP="+quantiteP+"&typeP="+typeP+"";
                 System.out.print(link);
                     URL url = new URL(link);
                 HttpClient client = new DefaultHttpClient();
@@ -211,8 +211,8 @@ ajouter food au panier    */
         @Override
         protected User doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("username", user.username));
-            dataToSend.add(new BasicNameValuePair("password", user.password));
+            dataToSend.add(new BasicNameValuePair("username", user.getUsernameU()));
+            dataToSend.add(new BasicNameValuePair("password", user.getPasswordU()));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams,
@@ -240,8 +240,8 @@ ajouter food au panier    */
                     int age = jObject.getInt("age");
                     String adresse = jObject.getString("adresse");
                     String arrondissement = jObject.getString("arrondissement");
-                    returnedUser = new User(name, age, user.username,user.password,adresse, arrondissement);
-                    session.setusername(user.username + "");
+                    returnedUser = new User(name, user.getUsernameU(), user.getPasswordU(), arrondissement);
+                    session.setusername(user.getUsernameU() + "");
                 }
 
             } catch (Exception e) {
@@ -271,7 +271,7 @@ ajouter food au panier    */
         @Override
         protected Food doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("typeP", food.typeP + ""));
+            dataToSend.add(new BasicNameValuePair("typeP", food.getTypeF() + ""));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams,
