@@ -22,12 +22,9 @@ public class Check_register extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
         setContentView(R.layout.activity_register);
-=======
-        //setContentView(R.layout.activity_register);
->>>>>>> duy_version_test
     }
+
     public void doConnect(View view) {
         EditText txtName = (EditText) findViewById(R.id.etName);
         String strName = txtName.getText().toString();
@@ -41,17 +38,10 @@ public class Check_register extends Activity {
         EditText txtUserPasswd = (EditText) findViewById(R.id.etPassword);
         String strUserPasswd = txtUserPasswd.getText().toString();
 
-<<<<<<< HEAD
-        EditText txtUserAdresse = (EditText) findViewById(R.id.etAdresse);
-        String strUserAdresse = txtUserAdresse.getText().toString();
-
-        EditText txtUserArrondissement = (EditText) findViewById(R.id.etArrondissement);
-=======
         EditText txtUserAdresse = (EditText) findViewById(R.id.etAddress);
         String strUserAdresse = txtUserAdresse.getText().toString();
 
         EditText txtUserArrondissement = (EditText) findViewById(R.id.etPostalCode);
->>>>>>> duy_version_test
         String strUserArrondissement = txtUserArrondissement.getText().toString();
 
 
@@ -96,12 +86,7 @@ public class Check_register extends Activity {
         ((EditText) findViewById(R.id.etPassword)).setText("");
         ((EditText) findViewById(R.id.etName)).setText("");
         ((EditText) findViewById(R.id.etAge)).setText("");
-<<<<<<< HEAD
-        ((EditText) findViewById(R.id.etAdresse)).setText("");
-        ((EditText) findViewById(R.id.etArrondissement)).setText("");
-=======
         ((EditText) findViewById(R.id.etAddress)).setText("");
         ((EditText) findViewById(R.id.etPostalCode)).setText("");
->>>>>>> duy_version_test
     }
 }
