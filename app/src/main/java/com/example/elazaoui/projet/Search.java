@@ -4,23 +4,28 @@ package com.example.elazaoui.projet;
  * Created by DUYNGUYEN on 3/9/2016.
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Search extends BaseActivity {
 
@@ -37,8 +42,17 @@ public class Search extends BaseActivity {
     private JSONArray mFoods = null;
     //manages all of our foods in a list.
     private ArrayList<HashMap<String, String>> mFoodList;
+    private ArrayList<HashMap<String, String>> mFilteredFoodList;
 
     private ListView mlistView;
+
+    //Search
+    View myView;
+    SearchView mySearchview;
+    Typeface myTypeface;
+    ImageButton buttonAudio;
+    ImageButton buttonMaps;
+    String found = "N";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +67,22 @@ public class Search extends BaseActivity {
 
         //loading the foods via AsyncTask
         new LoadFoods().execute();
-
-
-
     }
+
+    /*@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceBundle) {
+        //myTypeface = Typeface.createFromAsset(this.getAssets(), 'fonts/book.TTF');
+
+        mySearchview = (SearchView) myView.findViewById(R.id.searchView1);
+
+        mySearchview.setQueryHint("Let's eat... :-)");
+
+        //mlistView = (ListView) findViewById(R.id.listView);
+
+        //buttonAudio = (ImageButton)
+
+        return myView;
+    }*/
 
     @Override
     protected void onResume() {

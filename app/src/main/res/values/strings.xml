@@ -33,5 +33,7 @@
         this is an inscription test
         this is an inscription test
         this is an inscription test.</string>
+    <string name="app_label">ShareUrFood</string>
+    <string name="search_hint">Let\'s eat... :-)</string>
 
 </resources>
