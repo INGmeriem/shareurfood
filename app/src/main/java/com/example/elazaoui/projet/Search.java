@@ -4,28 +4,35 @@ package com.example.elazaoui.projet;
  * Created by DUYNGUYEN on 3/9/2016.
  */
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -37,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Search extends BaseActivity {
 
@@ -77,6 +85,11 @@ public class Search extends BaseActivity {
         super.onCreate(savedInstanceState);
         //note that use read_comments.xml instead of our activity_row_food.xml
         setContentView(R.layout.activity_search);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         mlistView = (ListView) findViewById(R.id.listView);
 
@@ -163,7 +176,7 @@ public class Search extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Voice search
-        if(requestCode == 1) {
+        if (requestCode == 1) {
             ArrayList<String> results;
             results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
@@ -172,11 +185,10 @@ public class Search extends BaseActivity {
             mySearchview.setIconifiedByDefault(false);
         }
         //Maps search
-        if(requestCode == 2) {
+        if (requestCode == 2) {
 
         }
     }
-
 
 
     ///////////////////////////////////////////////////////////
@@ -212,6 +224,12 @@ public class Search extends BaseActivity {
             pDialog.dismiss();
             //we will develop this method in version 2
             updateList();
+
+            for (int i = 0; i < mFoodList.size(); i++) {
+                ImageView image = (ImageView) findViewById(R.id.imageView);
+                Bitmap bitmap = getBitmapFromURL(mFoodList.get(i).get("image"));
+                image.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -271,7 +289,7 @@ public class Search extends BaseActivity {
                     }
                 }
 
-                if(matchFound == "N") {
+                if (matchFound == "N") {
                     // adding HashList to ArrayList
                     mFoodList.add(map);
                 }
@@ -286,10 +304,10 @@ public class Search extends BaseActivity {
     //Inserts the parsed data into our listview
     private void updateList() {
 
-        SimpleAdapter adapter = new SimpleAdapter(Search.this, mFoodList,
+        MyAdapter adapter = new MyAdapter(Search.this, mFoodList,
                 R.layout.activity_row_food, new String[]{"id", "name", "description", "location",
-                "price", "image"}, new int[]{0, R.id.nameText, R.id.descriptionText,
-                R.id.locationText, R.id.priceText, 0});
+                "price"}, new int[]{0, R.id.nameText, R.id.descriptionText,
+                R.id.locationText, R.id.priceText});
 
         //Set the adapter to your ListView
         mlistView.setAdapter(adapter);
@@ -319,10 +337,37 @@ public class Search extends BaseActivity {
                 foodDetailIntent.putExtra(FOOD_POSITION, selectedFoodIndex);
                 startActivityForResult(foodDetailIntent, 1111);
 
-                Toast.makeText(Search.this, "Wow, you want to eat " + "\"" +selectedFoodName + "\"", Toast.LENGTH_LONG).show();
+                Toast.makeText(Search.this, "Wow, you want to eat " + "\"" + selectedFoodName + "\"", Toast.LENGTH_LONG).show();
 
             }
         });
+    }
+
+    public class MyAdapter extends SimpleAdapter{
+
+        public MyAdapter(Context context, ArrayList<? extends HashMap<String, String>> data, int resource, String[] from, int[] to){
+            super(context, data, resource, from, to);
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent){
+            // here you let SimpleAdapter built the view normally.
+            View v = super.getView(position, convertView, parent);
+
+            // Then we get reference for Picasso
+            ImageView img = (ImageView) v.getTag();
+            if(img == null){
+                img = (ImageView) v.findViewById(R.id.imageView);
+                v.setTag(img); // <<< THIS LINE !!!!
+            }
+            // get the url from the data you passed to the `Map`
+            //String url = ((Map)getItem(position)).get("image");
+            String url = mFoodList.get(position).get("image");
+            // do Picasso
+            Picasso.with(v.getContext()).load(url).into(img);
+
+            // return the view
+            return v;
+        }
     }
 
 }

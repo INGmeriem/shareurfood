@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -73,23 +75,10 @@ public class SearchDetail extends BaseActivity {
         }
 
 
-        /*ImageView image = (ImageView) findViewById(R.id.imageView);
-        Bitmap bitmap = getBitmapFromURL(foodItem.get("image"));
-        image.setImageBitmap(bitmap);*/
+        ImageView image = (ImageView) findViewById(R.id.imageView);
+        Bitmap bitmap =  getBitmapFromURL(foodItem.get("image"));
+        image.setImageBitmap(bitmap);
     }
 
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            // Log exception
-            return null;
-        }
-    }
+
 }
