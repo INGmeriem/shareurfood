@@ -112,7 +112,22 @@
             android:id="@+id/bRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="Register" />
+
+        <Button
+            android:id="@+id/bClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Clear" />
+
+        <Button
+            android:id="@+id/bBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Back" />
 
     </LinearLayout>
 

@@ -4,16 +4,9 @@ package com.example.elazaoui.projet;
  * Created by elazaoui on 02/03/16.
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +17,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Register extends AppCompatActivity implements OnClickListener {
 
     private EditText user, pass, name, age, address, postalCode, email, phone;
-    private Button mRegister;
+    private Button mRegister, mReset, mBack;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -70,6 +71,10 @@ public class Register extends AppCompatActivity implements OnClickListener {
 
         mRegister = (Button) findViewById(R.id.bRegister);
         mRegister.setOnClickListener(this);
+        mReset = (Button) findViewById(R.id.bClear);
+        mReset.setOnClickListener(this);
+        mBack = (Button) findViewById(R.id.bBack);
+        mBack.setOnClickListener(this);
 
     }
 
@@ -77,16 +82,61 @@ public class Register extends AppCompatActivity implements OnClickListener {
     public void onClick(View v) {
         // TODO Auto-generated method stub
 
-        String username = user.getText().toString();
-        String password = pass.getText().toString();
-        String nameU = name.getText().toString();
-        String ageU = age.getText().toString();
-        String addressU = address.getText().toString();
-        String postalCodeU = postalCode.getText().toString();
-        String emailU = email.getText().toString();
-        String phoneU = phone.getText().toString();
+        switch (v.getId()) {
+            case R.id.bRegister:
 
-        new CreateUser().execute(username, password, nameU, ageU, addressU, postalCodeU, emailU, phoneU);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                String username = user.getText().toString();
+                                String password = pass.getText().toString();
+                                String nameU = name.getText().toString();
+                                String ageU = age.getText().toString();
+                                String addressU = address.getText().toString();
+                                String postalCodeU = postalCode.getText().toString();
+                                String emailU = email.getText().toString();
+                                String phoneU = phone.getText().toString();
+
+                                new CreateUser().execute(username, password, nameU, ageU, addressU, postalCodeU, emailU, phoneU);
+
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+                break;
+
+            case R.id.bClear:
+                user.getText().clear();
+                pass.getText().clear();
+                name.getText().clear();
+                age.getText().clear();
+                address.getText().clear();
+                postalCode.getText().clear();
+                email.getText().clear();
+                phone.getText().clear();
+                break;
+
+            case R.id.bBack:
+                finish();
+                break;
+
+            default:
+                break;
+        }
+
+
 
     }
 

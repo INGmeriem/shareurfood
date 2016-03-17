@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -52,6 +54,9 @@ public class Search extends BaseActivity {
     public static final String FOOD_ID = "FOOD_ID";
     public static final String FOOD_POSITION = "FOOD_POSITION";
 
+    public static final String RETURN_MESSAGE = "RETURN_MESSAGE";
+    private static final int DETAIL_REQUEST = 1111;
+
     //JSON IDS:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -62,6 +67,8 @@ public class Search extends BaseActivity {
     public static ArrayList<HashMap<String, String>> mFoodList = new ArrayList<HashMap<String, String>>();
 
     private ListView mlistView;
+
+    private RelativeLayout relativeLayout;
 
     //Search
     View myView;
@@ -78,6 +85,8 @@ public class Search extends BaseActivity {
         super.onCreate(savedInstanceState);
         //note that use read_comments.xml instead of our activity_row_food.xml
         setContentView(R.layout.activity_search);
+
+        relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutFood);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -180,6 +189,20 @@ public class Search extends BaseActivity {
         //Maps search
         if (requestCode == 2) {
 
+        }
+
+        if (requestCode == DETAIL_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String message = data.getStringExtra(RETURN_MESSAGE);
+                Snackbar.make(relativeLayout, message, Snackbar.LENGTH_LONG)
+                        .setAction("Go to cart", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(Search.this,
+                                        "Going to cart", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+            }
         }
     }
 
@@ -328,7 +351,7 @@ public class Search extends BaseActivity {
 
                 Intent foodDetailIntent = new Intent(Search.this, SearchDetail.class);
                 foodDetailIntent.putExtra(FOOD_POSITION, selectedFoodIndex);
-                startActivityForResult(foodDetailIntent, 1111);
+                startActivityForResult(foodDetailIntent, DETAIL_REQUEST);
 
                 Toast.makeText(Search.this, "Wow, you want to eat " + "\"" + selectedFoodName + "\"", Toast.LENGTH_LONG).show();
 

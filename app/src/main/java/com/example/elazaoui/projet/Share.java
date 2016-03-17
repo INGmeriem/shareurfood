@@ -4,16 +4,9 @@ package com.example.elazaoui.projet;
  * Created by elazaoui on 02/03/16.
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +17,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Share extends BaseActivity implements OnClickListener {
 
@@ -67,14 +68,57 @@ public class Share extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         // TODO Auto-generated method stub
 
-        String nameF = name.getText().toString();
-        String descriptionF = description.getText().toString();
-        String priceF = price.getText().toString();
-        String imageF = image.getText().toString();
-        String qtyF = qty.getText().toString();
-        String typeF = type.getText().toString();
+        switch (v.getId()) {
+            case R.id.bShare:
 
-        new CreateFood().execute(nameF, descriptionF, priceF, imageF, qtyF, typeF);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                String nameF = name.getText().toString();
+                                String descriptionF = description.getText().toString();
+                                String priceF = price.getText().toString();
+                                String imageF = image.getText().toString();
+                                String qtyF = qty.getText().toString();
+                                String typeF = type.getText().toString();
+
+                                new CreateFood().execute(nameF, descriptionF, priceF, imageF, qtyF, typeF);
+
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Share.this);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+
+                break;
+
+            case R.id.bClear:
+                name.getText().clear();
+                description.getText().clear();
+                price.getText().clear();
+                image.getText().clear();
+                image.getText().clear();
+                qty.getText().clear();
+                type.getText().clear();
+                break;
+
+            case R.id.bBack:
+                finish();
+                break;
+
+            default:
+                break;
+        }
 
     }
 
