@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Search extends BaseActivity {
 
@@ -116,34 +118,51 @@ public class Search extends BaseActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 new LoadFoods().execute(newText);
-                //do something here
-/*                if (newText.length() > 3 || newText.length() == 0) {
-                    mlistView.setVisibility(myView.VISIBLE);
-
-                    //textSearch = newText;
-                    new LoadFoods().execute(newText);
-                } else {
-                    mlistView.setVisibility(myView.INVISIBLE);
-                }*/
 
                 return false;
             }
         });
+
+        //Recognize voice speed search
+        buttonAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hurry uppp! Please start speaking loudly : food name, type or postal code whatever you want!");
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.FRENCH);
+                startActivityForResult(voiceIntent, 1);
+            }
+        });
+
+        buttonMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
-    public void filterFoodArray(String newText)
-    {
-        String pName;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Voice search
+        if(requestCode == 1) {
+            ArrayList<String> results;
+            results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-        mFilteredFoodList.clear();
+            String text = results.get(0).replace("'", "");
+            mySearchview.setQuery(text, true);
+            mySearchview.setIconifiedByDefault(false);
+        }
+        //Maps search
+        if(requestCode == 2) {
 
-        for (int i = 0; i < mFoodList.size(); i++) {
-            pName = mFoodList.get(i).get("name").toLowerCase();
-            if(pName.contains(newText.toLowerCase())) {
-                mFilteredFoodList.add(mFoodList.get(i));
-            }
         }
     }
+
+
 
     ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
@@ -153,7 +172,7 @@ public class Search extends BaseActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(Search.this);
-            //pDialog.setMessage("Loading Foods...");
+            pDialog.setMessage("Loading Foods...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             //pDialog.show();
@@ -248,10 +267,6 @@ public class Search extends BaseActivity {
     //Inserts the parsed data into our listview
     private void updateList() {
 
-        //List<HashMap<String, String>> mData = GetSampleData();
-
-        //filterFoodArray(textSearch);
-
         SimpleAdapter adapter = new SimpleAdapter(Search.this, mFoodList,
                 R.layout.activity_row_food, new String[]{"id", "name", "description", "location",
                 "price", "image"}, new int[]{0, R.id.nameText, R.id.descriptionText,
@@ -259,8 +274,6 @@ public class Search extends BaseActivity {
 
         //Set the adapter to your ListView
         mlistView.setAdapter(adapter);
-        //mlistView.setAdapter(new SearchResultsAdapter(Search.this, mFilteredFoodList));
-
 
         mlistView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -287,80 +300,4 @@ public class Search extends BaseActivity {
         });
     }
 
-    /*public class SearchResultsAdapter extends BaseAdapter {
-        private LayoutInflater layoutInflater;
-
-        private ArrayList<HashMap<String, String>> foodDetails = new ArrayList<HashMap<String, String>>();
-        int count;
-        Context context;
-
-       public SearchResultsAdapter(Context context, ArrayList<HashMap<String, String>> food_details) {
-           layoutInflater = LayoutInflater.from(context);
-
-           this.foodDetails = food_details;
-           this.count = food_details.size();
-           this.context = context;
-       }
-
-        @Override
-        public int getCount() {
-            return count;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-
-            HashMap<String, String> tempFood = foodDetails.get(position);
-
-            if (convertView == null) {
-                convertView = layoutInflater.inflate(R.layout.activity_row_food, null);
-
-                holder = new ViewHolder();
-
-                holder.food_name = (TextView) convertView.findViewById(R.id.nameText);
-                holder.food_desc = (TextView) convertView.findViewById(R.id.descriptionText);
-                holder.food_location = (TextView) convertView.findViewById(R.id.locationText);
-                holder.food_price = (TextView) convertView.findViewById(R.id.priceText);
-                //holder.food_image = (ImageView) convertView.findViewById(R.id.imageView);
-
-
-                convertView.setTag(holder);
-            }
-
-            else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            holder.food_name.setText(tempFood.get("name"));
-            holder.food_desc.setText(tempFood.get("description"));
-            holder.food_location.setText(tempFood.get("location"));
-            holder.food_price.setText(tempFood.get("price"));
-            //holder.food_image.setText(tempFood.get("image"));
-
-            return convertView;
-        }
-
-        class ViewHolder
-        {
-            TextView food_name;
-            TextView food_desc;
-            TextView food_location;
-            TextView food_price;
-            TextView food_image;
-
-            Button addToCart;
-
-        }
-    }*/
 }
