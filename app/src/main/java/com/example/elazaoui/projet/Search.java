@@ -52,7 +52,7 @@ public class Search extends BaseActivity {
     //An array of all of our foods
     private JSONArray mFoods = null;
     //manages all of our foods in a list.
-    public static final ArrayList<HashMap<String, String>> mFoodList = new ArrayList<HashMap<String, String>>();
+    public static ArrayList<HashMap<String, String>> mFoodList = new ArrayList<HashMap<String, String>>();
 
     private ListView mlistView;
 
@@ -204,7 +204,7 @@ public class Search extends BaseActivity {
      */
     public void updateJSONdata() {
 
-        //mFoodList = new ArrayList<HashMap<String, String>>();
+        mFoodList = new ArrayList<HashMap<String, String>>();
 
         try {
             List<NameValuePair> params = new ArrayList<NameValuePair>();

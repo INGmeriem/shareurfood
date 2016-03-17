@@ -15,6 +15,7 @@
 
     <EditText
         android:id="@+id/etUsername"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content" />
@@ -26,6 +27,7 @@
 
     <EditText
         android:id="@+id/etPassword"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:inputType="textPassword"
         android:layout_marginBottom="10dp"
