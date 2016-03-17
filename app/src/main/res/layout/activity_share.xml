@@ -19,6 +19,7 @@
 
         <EditText
             android:id="@+id/etName"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -29,6 +30,7 @@
 
         <EditText
             android:id="@+id/etDescription"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -39,6 +41,7 @@
 
         <EditText
             android:id="@+id/etPrice"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -49,6 +52,7 @@
 
         <EditText
             android:id="@+id/etImage"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -69,6 +73,7 @@
 
         <EditText
             android:id="@+id/etQuantity"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
