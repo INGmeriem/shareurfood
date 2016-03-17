@@ -16,20 +16,20 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="#FFFFFF"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF" />
 
     <SearchView
         android:id="@+id/searchView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/bAudio"
-        android:layout_marginTop="3dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@+id/bAudio">
 
     </SearchView>
 
@@ -51,17 +51,45 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
         android:layout_marginTop="3dp"
-        android:src="@android:drawable/ic_dialog_map"/>
+        android:src="@android:drawable/ic_dialog_map" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/bMaps"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:dividerHeight="5dp"
-        android:divider="#E6E6E6"/>
+        android:divider="#E6E6E6"
+        android:dividerHeight="5dp" />
+
+    <!--    <fragment
+            android:id="@+id/fragmentMap"
+            android:name="com.example.elazaoui.projet.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>-->
+
+    <!--    <fragment
+            android:id="@+id/fragmentMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"></fragment>-->
+
+<!--    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fragmentMap"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:uiCompass="false"
+        map:uiRotateGestures="true"
+        map:uiScrollGestures="false"
+        map:uiTiltGestures="true"
+        map:uiZoomControls="true"
+        map:uiZoomGestures="true" />-->
+
+
 
 </RelativeLayout>
 

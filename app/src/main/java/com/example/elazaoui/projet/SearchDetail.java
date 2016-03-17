@@ -21,6 +21,9 @@ public class SearchDetail extends BaseActivity {
 
     HashMap<String, String> foodItem = new HashMap<String, String>();
 
+    String foodPosition = null;
+    String temp = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,32 +41,41 @@ public class SearchDetail extends BaseActivity {
             }
         });
 
-        String foodPosition = getIntent().getStringExtra(Search.FOOD_POSITION);
+        try {
+            foodPosition = getIntent().getStringExtra(Search.FOOD_POSITION);
 
-        foodItem = Search.mFoodList.get(Integer.valueOf(foodPosition));
+            foodItem = Search.mFoodList.get(Integer.valueOf(foodPosition));
 
-        TextView name = (TextView) findViewById(R.id.nameText);
-        name.setText(foodItem.get("name"));
+            TextView name = (TextView) findViewById(R.id.nameText);
+            name.setText(foodItem.get("name"));
 
-        TextView type = (TextView) findViewById(R.id.typeText);
-        type.setText(foodItem.get("type"));
+            TextView type = (TextView) findViewById(R.id.typeText);
+            type.setText(foodItem.get("type"));
 
-        TextView price = (TextView) findViewById(R.id.priceText);
-        price.setText(foodItem.get("price"));
+            TextView price = (TextView) findViewById(R.id.priceText);
+            price.setText(foodItem.get("price"));
 
-        TextView postalcode = (TextView) findViewById(R.id.locationText);
-        postalcode.setText(foodItem.get("location"));
+            TextView postalcode = (TextView) findViewById(R.id.locationText);
+            postalcode.setText(foodItem.get("location"));
 
-        TextView user = (TextView) findViewById(R.id.userText);
-        user.setText(foodItem.get("user"));
+            TextView user = (TextView) findViewById(R.id.userText);
+            user.setText(foodItem.get("user"));
 
-        TextView description = (TextView) findViewById(R.id.descriptionText);
-        description.setText(foodItem.get("description"));
+            TextView description = (TextView) findViewById(R.id.descriptionText);
+            description.setText(foodItem.get("description"));
+
+            temp = foodPosition;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+
+            Intent searchIntent = new Intent(SearchDetail.this, Search.class);
+            startActivity(searchIntent);
+        }
+
 
         /*ImageView image = (ImageView) findViewById(R.id.imageView);
         Bitmap bitmap = getBitmapFromURL(foodItem.get("image"));
         image.setImageBitmap(bitmap);*/
-
     }
 
     public static Bitmap getBitmapFromURL(String src) {

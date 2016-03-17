@@ -4,9 +4,13 @@ package com.example.elazaoui.projet;
  * Created by DUYNGUYEN on 3/9/2016.
  */
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,6 +24,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -63,6 +69,8 @@ public class Search extends BaseActivity {
     ImageButton buttonMaps;
     String found = "N";
     String textSearch;
+
+    SupportMapFragment gMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,17 +137,25 @@ public class Search extends BaseActivity {
                 Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
                 voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hurry uppp! Please start speaking loudly : food name, type or postal code whatever you want!");
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hurry uppp! Please start speaking loudly : food name, type or postal code... whatever you want!");
                 voiceIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
                 voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.FRENCH);
                 startActivityForResult(voiceIntent, 1);
             }
         });
 
+        //API Maps search
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent mapsIntent = new Intent(Search.this, MapActivity.class);
+                startActivity(mapsIntent);
 
+                //gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragmentMap)).getMap();
+
+                //gMap = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMap);
+
+                //gMap.getView().setVisibility(View.VISIBLE);
             }
         });
     }
