@@ -7,10 +7,10 @@ package com.example.elazaoui.projet;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,14 +20,20 @@ import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Search extends BaseActivity {
+
+
+    JSONParser jParser = new JSONParser();
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -49,13 +55,13 @@ public class Search extends BaseActivity {
     //Search
     View myView;
     SearchView mySearchview;
-    Typeface myTypeface;
     ImageButton buttonAudio;
     ImageButton buttonMaps;
     String found = "N";
+    String textSearch;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //note that use read_comments.xml instead of our activity_row_food.xml
         setContentView(R.layout.activity_search);
@@ -65,35 +71,115 @@ public class Search extends BaseActivity {
 
         mlistView = (ListView) findViewById(R.id.listView);
 
-        //loading the foods via AsyncTask
-        new LoadFoods().execute();
+        //loading the foods via AsyncTask (first time)
+        String key = null;
+        new LoadFoods().execute(key);
+
+        //Not use AsynTask for the first time
+        //updateJSONdata();
+        //updateList();
+
+        //loading action for search bar
+        loadSearchBar();
     }
-
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceBundle) {
-        //myTypeface = Typeface.createFromAsset(this.getAssets(), 'fonts/book.TTF');
-
-        mySearchview = (SearchView) myView.findViewById(R.id.searchView1);
-
-        mySearchview.setQueryHint("Let's eat... :-)");
-
-        //mlistView = (ListView) findViewById(R.id.listView);
-
-        //buttonAudio = (ImageButton)
-
-        return myView;
-    }*/
 
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
         //loading the foods via AsyncTask
-        //new LoadFoods().execute();
+        new LoadFoods().execute(textSearch);
+    }
+
+    public void loadSearchBar() {
+        mySearchview = (SearchView) findViewById(R.id.searchView1);
+
+        mySearchview.setQueryHint("Search by name, food type or postal code...");
+
+        buttonAudio = (ImageButton) findViewById(R.id.bAudio);
+
+        buttonMaps = (ImageButton) findViewById(R.id.bMaps);
+
+        mySearchview.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Toast.makeText(Search.this, "Let's eat... :-)", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mySearchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                new LoadFoods().execute(newText);
+                //do something here
+/*                if (newText.length() > 3 || newText.length() == 0) {
+                    mlistView.setVisibility(myView.VISIBLE);
+
+                    //textSearch = newText;
+                    new LoadFoods().execute(newText);
+                } else {
+                    mlistView.setVisibility(myView.INVISIBLE);
+                }*/
+
+                return false;
+            }
+        });
+    }
+
+    public void filterFoodArray(String newText)
+    {
+        String pName;
+
+        mFilteredFoodList.clear();
+
+        for (int i = 0; i < mFoodList.size(); i++) {
+            pName = mFoodList.get(i).get("name").toLowerCase();
+            if(pName.contains(newText.toLowerCase())) {
+                mFilteredFoodList.add(mFoodList.get(i));
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
+    public class LoadFoods extends AsyncTask<String, String, ArrayList<HashMap<String, String>>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Search.this);
+            //pDialog.setMessage("Loading Foods...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            //pDialog.show();
+        }
+
+        @Override
+        protected ArrayList<HashMap<String, String>> doInBackground(String... args) {
+            //we will develop this method in version 2
+
+            textSearch = args[0];
+
+            updateJSONdata();
+
+            return mFoodList;
+        }
+
+
+        @Override
+        protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
+            super.onPostExecute(result);
+
+            pDialog.dismiss();
+            //we will develop this method in version 2
+            updateList();
+        }
+    }
 
     /**
      * Retrieves json data of comments
@@ -102,13 +188,20 @@ public class Search extends BaseActivity {
 
         mFoodList = new ArrayList<HashMap<String, String>>();
 
-        JSONParser jParser = new JSONParser();
-
-        JSONObject json = jParser.getJSONFromUrl(SEARCH_URL);
-
         try {
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("keyword", textSearch));
+
+            Log.d("request!", "starting");
+
+            JSONObject json = jParser.getJSONFromUrl(SEARCH_URL);
+
+            //Posting user data to script
+            json = jParser.makeHttpRequest(SEARCH_URL, "POST", params);
 
             mFoods = json.getJSONArray("foods");
+
+            String matchFound = "N";
 
             // looping through all posts according to the json object returned
             for (int i = 0; i < mFoods.length(); i++) {
@@ -133,8 +226,17 @@ public class Search extends BaseActivity {
                 map.put("price", price);
                 map.put("image", image);
 
-                // adding HashList to ArrayList
-                mFoodList.add(map);
+                //Check if this food is already there in mFoodList. If yes, we don't add it again.
+                for (int j = 0; i > mFoodList.size(); j++) {
+                    if (mFoodList.get(j).get("id").equals(map.get("id"))) {
+                        matchFound = "Y";
+                    }
+                }
+
+                if(matchFound == "N") {
+                    // adding HashList to ArrayList
+                    mFoodList.add(map);
+                }
             }
 
         } catch (JSONException e) {
@@ -144,10 +246,11 @@ public class Search extends BaseActivity {
 
 
     //Inserts the parsed data into our listview
-
     private void updateList() {
 
         //List<HashMap<String, String>> mData = GetSampleData();
+
+        //filterFoodArray(textSearch);
 
         SimpleAdapter adapter = new SimpleAdapter(Search.this, mFoodList,
                 R.layout.activity_row_food, new String[]{"id", "name", "description", "location",
@@ -156,6 +259,7 @@ public class Search extends BaseActivity {
 
         //Set the adapter to your ListView
         mlistView.setAdapter(adapter);
+        //mlistView.setAdapter(new SearchResultsAdapter(Search.this, mFilteredFoodList));
 
 
         mlistView.setOnItemClickListener(new OnItemClickListener() {
@@ -183,33 +287,80 @@ public class Search extends BaseActivity {
         });
     }
 
-    public class LoadFoods extends AsyncTask<String, String, ArrayList<HashMap<String, String>>> {
+    /*public class SearchResultsAdapter extends BaseAdapter {
+        private LayoutInflater layoutInflater;
+
+        private ArrayList<HashMap<String, String>> foodDetails = new ArrayList<HashMap<String, String>>();
+        int count;
+        Context context;
+
+       public SearchResultsAdapter(Context context, ArrayList<HashMap<String, String>> food_details) {
+           layoutInflater = LayoutInflater.from(context);
+
+           this.foodDetails = food_details;
+           this.count = food_details.size();
+           this.context = context;
+       }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(Search.this);
-            pDialog.setMessage("Loading Foods...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
+        public int getCount() {
+            return count;
         }
 
         @Override
-        protected ArrayList<HashMap<String, String>> doInBackground(String... arg0) {
-            //we will develop this method in version 2
-            updateJSONdata();
-
-            return mFoodList;
+        public Object getItem(int position) {
+            return null;
         }
-
 
         @Override
-        protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
-            super.onPostExecute(result);
-            pDialog.dismiss();
-            //we will develop this method in version 2
-            updateList();
+        public long getItemId(int position) {
+            return position;
         }
-    }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            HashMap<String, String> tempFood = foodDetails.get(position);
+
+            if (convertView == null) {
+                convertView = layoutInflater.inflate(R.layout.activity_row_food, null);
+
+                holder = new ViewHolder();
+
+                holder.food_name = (TextView) convertView.findViewById(R.id.nameText);
+                holder.food_desc = (TextView) convertView.findViewById(R.id.descriptionText);
+                holder.food_location = (TextView) convertView.findViewById(R.id.locationText);
+                holder.food_price = (TextView) convertView.findViewById(R.id.priceText);
+                //holder.food_image = (ImageView) convertView.findViewById(R.id.imageView);
+
+
+                convertView.setTag(holder);
+            }
+
+            else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.food_name.setText(tempFood.get("name"));
+            holder.food_desc.setText(tempFood.get("description"));
+            holder.food_location.setText(tempFood.get("location"));
+            holder.food_price.setText(tempFood.get("price"));
+            //holder.food_image.setText(tempFood.get("image"));
+
+            return convertView;
+        }
+
+        class ViewHolder
+        {
+            TextView food_name;
+            TextView food_desc;
+            TextView food_location;
+            TextView food_price;
+            TextView food_image;
+
+            Button addToCart;
+
+        }
+    }*/
 }
