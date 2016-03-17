@@ -42,6 +42,9 @@ public class Search extends BaseActivity {
 
     private static final String SEARCH_URL = "http://shareurfood.nguyenhoangbaoduy.info/showfoodbyall.php";
 
+    public static final String FOOD_ID = "FOOD_ID";
+    public static final String FOOD_POSITION = "FOOD_POSITION";
+
     //JSON IDS:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -49,8 +52,7 @@ public class Search extends BaseActivity {
     //An array of all of our foods
     private JSONArray mFoods = null;
     //manages all of our foods in a list.
-    private ArrayList<HashMap<String, String>> mFoodList;
-    private ArrayList<HashMap<String, String>> mFilteredFoodList;
+    public static final ArrayList<HashMap<String, String>> mFoodList = new ArrayList<HashMap<String, String>>();
 
     private ListView mlistView;
 
@@ -67,9 +69,6 @@ public class Search extends BaseActivity {
         super.onCreate(savedInstanceState);
         //note that use read_comments.xml instead of our activity_row_food.xml
         setContentView(R.layout.activity_search);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mlistView = (ListView) findViewById(R.id.listView);
 
@@ -205,7 +204,7 @@ public class Search extends BaseActivity {
      */
     public void updateJSONdata() {
 
-        mFoodList = new ArrayList<HashMap<String, String>>();
+        //mFoodList = new ArrayList<HashMap<String, String>>();
 
         try {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -233,6 +232,8 @@ public class Search extends BaseActivity {
                 String location = c.getString("postalcode");
                 String price = c.getString("price");
                 String image = c.getString("image");
+                String type = c.getString("type");
+                String user = c.getString("user");
 
 
                 // creating new HashMap
@@ -244,6 +245,8 @@ public class Search extends BaseActivity {
                 map.put("location", location);
                 map.put("price", price);
                 map.put("image", image);
+                map.put("type", type);
+                map.put("user", user);
 
                 //Check if this food is already there in mFoodList. If yes, we don't add it again.
                 for (int j = 0; i > mFoodList.size(); j++) {
@@ -270,7 +273,7 @@ public class Search extends BaseActivity {
         SimpleAdapter adapter = new SimpleAdapter(Search.this, mFoodList,
                 R.layout.activity_row_food, new String[]{"id", "name", "description", "location",
                 "price", "image"}, new int[]{0, R.id.nameText, R.id.descriptionText,
-                R.id.locationText, R.id.priceText, R.id.imageView});
+                R.id.locationText, R.id.priceText, 0});
 
         //Set the adapter to your ListView
         mlistView.setAdapter(adapter);
@@ -283,18 +286,24 @@ public class Search extends BaseActivity {
                 Intent intentFoodDetail = new Intent(Search.this, SearchDetail.class);
                 startActivity(intentFoodDetail);
 
-                String selectedFood = mFoodList.get(position).get("id");
+                String selectedFoodId = mFoodList.get(position).get("id");
+                String selectedFoodName = mFoodList.get(position).get("name");
+                String selectedFoodIndex = String.valueOf(position);
 
                 // save user data
                 SharedPreferences sp = PreferenceManager
                         .getDefaultSharedPreferences(Search.this);
                 SharedPreferences.Editor edit = sp.edit();
 
-                edit.putString("idF", selectedFood);
+                edit.putString("idF", selectedFoodId);
 
                 edit.commit();
 
-                Toast.makeText(Search.this, "You selected food items " + selectedFood, Toast.LENGTH_LONG).show();
+                Intent foodDetailIntent = new Intent(Search.this, SearchDetail.class);
+                foodDetailIntent.putExtra(FOOD_POSITION, selectedFoodIndex);
+                startActivityForResult(foodDetailIntent, 1111);
+
+                Toast.makeText(Search.this, "Wow, you want to eat " + "\"" +selectedFoodName + "\"", Toast.LENGTH_LONG).show();
 
             }
         });

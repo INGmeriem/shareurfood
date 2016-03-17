@@ -4,14 +4,13 @@
     <string name="app_name">ShareUrFood</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_home">ShareUrFood - Home</string>
+    <string name="title_activity_home">  ShareUrFood - Home</string>
     <string name="title_activity_login">ShareUrFood - Login</string>
     <string name="title_activity_register">ShareUrFood - Register</string>
-    <string name="title_activity_share">ShareUrFood - Share</string>
-    <string name="title_activity_search">ShareUrFood - Search</string>
-    <string name="title_activity_search_detail">ShareUrFood - Search detail</string>
+    <string name="title_activity_share">  ShareUrFood - Share</string>
+    <string name="title_activity_search">  ShareUrFood - Search</string>
+    <string name="title_activity_search_detail">  ShareUrFood - Search detail</string>
     <string name="title_activity_about">ShareUrFood - About</string>
-    <string name="title_activity_detail">ShareUrFood - Food detail</string>
 
     <string name="about">About</string>
     <string name="about_headline">App History</string>

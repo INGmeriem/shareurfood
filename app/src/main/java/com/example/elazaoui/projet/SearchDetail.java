@@ -1,15 +1,25 @@
 package com.example.elazaoui.projet;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 
 /**
  * Created by DUYNGUYEN on 3/14/2016.
  */
 public class SearchDetail extends BaseActivity {
+
+    HashMap<String, String> foodItem = new HashMap<String, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +37,47 @@ public class SearchDetail extends BaseActivity {
                 finish();
             }
         });
+
+        String foodPosition = getIntent().getStringExtra(Search.FOOD_POSITION);
+
+        foodItem = Search.mFoodList.get(Integer.valueOf(foodPosition));
+
+        TextView name = (TextView) findViewById(R.id.nameText);
+        name.setText(foodItem.get("name"));
+
+        TextView type = (TextView) findViewById(R.id.typeText);
+        type.setText(foodItem.get("type"));
+
+        TextView price = (TextView) findViewById(R.id.priceText);
+        price.setText(foodItem.get("price"));
+
+        TextView postalcode = (TextView) findViewById(R.id.locationText);
+        postalcode.setText(foodItem.get("location"));
+
+        TextView user = (TextView) findViewById(R.id.userText);
+        user.setText(foodItem.get("user"));
+
+        TextView description = (TextView) findViewById(R.id.descriptionText);
+        description.setText(foodItem.get("description"));
+
+        /*ImageView image = (ImageView) findViewById(R.id.imageView);
+        Bitmap bitmap = getBitmapFromURL(foodItem.get("image"));
+        image.setImageBitmap(bitmap);*/
+
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
     }
 }
