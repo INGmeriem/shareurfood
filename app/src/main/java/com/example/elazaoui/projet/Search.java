@@ -4,16 +4,10 @@ package com.example.elazaoui.projet;
  * Created by DUYNGUYEN on 3/9/2016.
  */
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -44,7 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class Search extends BaseActivity {
 
@@ -225,11 +218,11 @@ public class Search extends BaseActivity {
             //we will develop this method in version 2
             updateList();
 
-            for (int i = 0; i < mFoodList.size(); i++) {
+            /*for (int i = 0; i < mFoodList.size(); i++) {
                 ImageView image = (ImageView) findViewById(R.id.imageView);
                 Bitmap bitmap = getBitmapFromURL(mFoodList.get(i).get("image"));
                 image.setImageBitmap(bitmap);
-            }
+            }*/
         }
     }
 
@@ -304,7 +297,7 @@ public class Search extends BaseActivity {
     //Inserts the parsed data into our listview
     private void updateList() {
 
-        MyAdapter adapter = new MyAdapter(Search.this, mFoodList,
+        SimpleAdapter adapter = new SimpleAdapter(Search.this, mFoodList,
                 R.layout.activity_row_food, new String[]{"id", "name", "description", "location",
                 "price"}, new int[]{0, R.id.nameText, R.id.descriptionText,
                 R.id.locationText, R.id.priceText});

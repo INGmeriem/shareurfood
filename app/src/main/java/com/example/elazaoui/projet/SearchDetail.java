@@ -1,19 +1,14 @@
 package com.example.elazaoui.projet;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 
 /**
@@ -76,8 +71,7 @@ public class SearchDetail extends BaseActivity {
 
 
         ImageView image = (ImageView) findViewById(R.id.imageView);
-        Bitmap bitmap =  getBitmapFromURL(foodItem.get("image"));
-        image.setImageBitmap(bitmap);
+        Picasso.with(SearchDetail.this).load(foodItem.get("image")).into(image);
     }
 
 
