@@ -172,7 +172,7 @@ public class Share extends BaseActivity implements OnClickListener {
                 image.getText().clear();
                 image.getText().clear();
                 qty.getText().clear();
-                type.getText().clear();
+                //type.getText().clear();
                 break;
 
             case R.id.bBack:

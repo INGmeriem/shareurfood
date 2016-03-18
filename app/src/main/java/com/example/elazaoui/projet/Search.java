@@ -181,12 +181,16 @@ public class Search extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Voice search
         if (requestCode == 1) {
-            ArrayList<String> results;
-            results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            try {
+                ArrayList<String> results;
+                results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-            String text = results.get(0).replace("'", "");
-            mySearchview.setQuery(text, true);
-            mySearchview.setIconifiedByDefault(false);
+                String text = results.get(0).replace("'", "");
+                mySearchview.setQuery(text, true);
+                mySearchview.setIconifiedByDefault(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         //Maps search
         if (requestCode == 2) {

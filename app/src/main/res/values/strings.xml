@@ -22,21 +22,11 @@
 
     <string name="description_test">This is an inscription test this is an inscription test
         this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test
-        this is an inscription test.</string>
+        </string>
     <string name="app_label">ShareUrFood</string>
     <string name="search_hint">Let\'s eat... :-)</string>
 
-    <string name="google_api_key">AIzaSyAabIctYlG1eXWaTU0lkuloSzeIvD-EQLo</string>
+    <string name="google_api_key">AIzaSyByMPdn3TgEbiawOH0GNXjnJaPIUyxlpbE</string>
 
 
 </resources>
