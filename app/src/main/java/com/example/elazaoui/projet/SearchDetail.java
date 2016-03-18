@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -91,8 +90,8 @@ public class SearchDetail extends BaseActivity {
                                         .setAction("Go to cart", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Intent cartIntent = new Intent(SearchDetail.this, Cart.class);
-                                                startActivity(cartIntent);
+                                                //Intent cartIntent = new Intent(SearchDetail.this, Cart.class);
+                                                //startActivity(cartIntent);
 
                                                 Toast.makeText(SearchDetail.this,
                                                         "Going to cart", Toast.LENGTH_SHORT).show();
@@ -156,7 +155,7 @@ public class SearchDetail extends BaseActivity {
 
     }
 
-    @Override
+    /*@Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
@@ -164,6 +163,11 @@ public class SearchDetail extends BaseActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        SearchDetail.this.finish();
     }
 
     //////////////////////////////////////////////////////////////////////////

@@ -94,8 +94,8 @@ public class Search extends BaseActivity {
         mListView = (ListView) findViewById(R.id.listView);
 
         //loading the foods via AsyncTask (first time)
-        String key = null;
-        new LoadFoods().execute(key);
+        //String key = null;
+        //new LoadFoods().execute(key);
 
         //Not use AsynTask for the first time
         //updateJSONdata();
@@ -109,6 +109,10 @@ public class Search extends BaseActivity {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+
+        /*String key = null;
+        new LoadFoods().execute(key);*/
+
         //loading the foods via AsyncTask
         new LoadFoods().execute(textSearch);
     }
