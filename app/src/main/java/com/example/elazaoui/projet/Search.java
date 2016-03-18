@@ -7,11 +7,9 @@ package com.example.elazaoui.projet;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -339,15 +337,6 @@ public class Search extends BaseActivity {
                 String selectedFoodId = mFoodList.get(position).get("id");
                 String selectedFoodName = mFoodList.get(position).get("name");
                 String selectedFoodIndex = String.valueOf(position);
-
-                // save user data
-                SharedPreferences sp = PreferenceManager
-                        .getDefaultSharedPreferences(Search.this);
-                SharedPreferences.Editor edit = sp.edit();
-
-                edit.putString("idF", selectedFoodId);
-
-                edit.commit();
 
                 Intent foodDetailIntent = new Intent(Search.this, SearchDetail.class);
                 foodDetailIntent.putExtra(FOOD_POSITION, selectedFoodIndex);
