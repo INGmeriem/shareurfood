@@ -45,7 +45,7 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(this, "You selected the Account Management Section", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_cart:
-                Toast.makeText(this, "You selected the Shopping Cart", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "You selected the Cart", Toast.LENGTH_LONG).show();
                 return true;
             case MENU_ITEM_LOGOUT:
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(BaseActivity.this);
