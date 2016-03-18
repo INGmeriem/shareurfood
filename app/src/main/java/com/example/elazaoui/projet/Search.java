@@ -66,7 +66,7 @@ public class Search extends BaseActivity {
     //manages all of our foods in a list.
     public static ArrayList<HashMap<String, String>> mFoodList = new ArrayList<HashMap<String, String>>();
 
-    private ListView mlistView;
+    private ListView mListView;
 
     private RelativeLayout relativeLayout;
 
@@ -93,7 +93,7 @@ public class Search extends BaseActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        mlistView = (ListView) findViewById(R.id.listView);
+        mListView = (ListView) findViewById(R.id.listView);
 
         //loading the foods via AsyncTask (first time)
         String key = null;
@@ -326,9 +326,9 @@ public class Search extends BaseActivity {
                 R.id.locationText, R.id.priceText});
 
         //Set the adapter to your ListView
-        mlistView.setAdapter(adapter);
+        mListView.setAdapter(adapter);
 
-        mlistView.setOnItemClickListener(new OnItemClickListener() {
+        mListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,

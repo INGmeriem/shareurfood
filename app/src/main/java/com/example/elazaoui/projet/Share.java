@@ -14,16 +14,21 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Share extends BaseActivity implements OnClickListener {
@@ -38,10 +43,23 @@ public class Share extends BaseActivity implements OnClickListener {
     JSONParser jsonParser = new JSONParser();
 
     private static final String SHARE_URL = "http://shareurfood.nguyenhoangbaoduy.info/addfood.php";
+    private static final String TYPE_URL = "http://shareurfood.nguyenhoangbaoduy.info/showfoodtype.php";
 
     //ids
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+
+    private SimpleAdapter adapterFoodTypes;
+
+    private Spinner cmbFoodTypes;
+
+    //Food types
+    private List<HashMap<String, String>> lstFoodTypes;
+
+    private String selectedFoodTypeId = null;
+
+    //private int counter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +72,48 @@ public class Share extends BaseActivity implements OnClickListener {
         price = (EditText)findViewById(R.id.etPrice);
         image = (EditText)findViewById(R.id.etImage);
         qty = (EditText)findViewById(R.id.etQuantity);
-        type = (EditText)findViewById(R.id.etType);
+
+        //type = (EditText)findViewById(R.id.etType);
+
+        new LoadFoodTypeAsyncTask().execute();
+
+        /*cmbFoodTypes = (Spinner) findViewById(R.id.spinnerType);
+        adapterFoodTypes = new SimpleAdapter(this, lstFoodTypes, R.layout.activity_foodtype,
+                new String[] {"id", "name"}, new int[] {0, R.id.tvFoodType});
+        cmbFoodTypes.setAdapter(adapterFoodTypes);
+        cmbFoodTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+
+                HashMap<String, String> map = lstFoodTypes.get(position);
+
+                String type = map.get("name");
+
+                Toast.makeText(Share.this, type, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+                                       long arg3) {
+                HashMap<String, String> map = lstFoodTypes.get(arg2);
+            String name = map.get(NAME);
+            if (name.equalsIgnoreCase(ADD_NEW_ITEM)) {
+                lstNames.remove(map);
+                counter++;
+                addNewName(String.valueOf(counter));
+                addNewName(ADD_NEW_ITEM);
+                adapter.notifyDataSetChanged();
+            }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+                Toast.makeText(Share.this, "This is food type", Toast.LENGTH_LONG).show();
+            }
+        });*/
 
         mShare = (Button) findViewById(R.id.bShare);
         mShare.setOnClickListener(this);
@@ -82,7 +141,11 @@ public class Share extends BaseActivity implements OnClickListener {
                                 String priceF = price.getText().toString();
                                 String imageF = image.getText().toString();
                                 String qtyF = qty.getText().toString();
-                                String typeF = type.getText().toString();
+
+                                //String typeF = type.getText().toString();
+                                //String typeF = cmbFoodTypes.getSelectedItem().toString();
+
+                                String typeF = selectedFoodTypeId;
 
                                 new CreateFood().execute(nameF, descriptionF, priceF, imageF, qtyF, typeF);
 
@@ -122,6 +185,91 @@ public class Share extends BaseActivity implements OnClickListener {
 
     }
 
+    class LoadFoodTypeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            lstFoodTypes = new ArrayList<HashMap<String, String>>();
+
+            JSONArray mFoodTypes = null;
+
+            try {
+
+                Log.d("request!", "starting");
+
+                JSONObject json = jsonParser.getJSONFromUrl(TYPE_URL);
+
+                mFoodTypes = json.getJSONArray("foodtypes");
+
+                for (int i = 0; i < mFoodTypes.length(); i++) {
+                    JSONObject c = mFoodTypes.getJSONObject(i);
+
+                    int id = c.getInt("id");
+                    String name = c.getString("name");
+
+                    HashMap<String, String> map = new HashMap<String, String>();
+
+                    map.put("id", String.valueOf(id));
+                    map.put("name", name);
+
+                    //Add to ArrayList
+                    lstFoodTypes.add(map);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            cmbFoodTypes = (Spinner) findViewById(R.id.spinnerType);
+            adapterFoodTypes = new SimpleAdapter(Share.this, lstFoodTypes, R.layout.activity_foodtype,
+                    new String[] {"id", "name"}, new int[] {0, R.id.tvFoodType});
+            cmbFoodTypes.setAdapter(adapterFoodTypes);
+            cmbFoodTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                    //Log.v("item", (String) parent.getItemAtPosition(position));
+
+                    HashMap<String, String> map = lstFoodTypes.get(position);
+
+                    String idTF = map.get("id");
+                    selectedFoodTypeId = idTF;
+
+                    String nameTF = map.get("name");
+
+
+                    Toast.makeText(Share.this, idTF + " " + nameTF, Toast.LENGTH_LONG).show();
+                }
+
+            /*@Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+                                       long arg3) {
+                HashMap<String, String> map = lstFoodTypes.get(arg2);
+            String name = map.get(NAME);
+            if (name.equalsIgnoreCase(ADD_NEW_ITEM)) {
+                lstNames.remove(map);
+                counter++;
+                addNewName(String.valueOf(counter));
+                addNewName(ADD_NEW_ITEM);
+                adapter.notifyDataSetChanged();
+            }
+            }*/
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    // TODO Auto-generated method stub
+                }
+            });
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
     class CreateFood extends AsyncTask<String, String, String> {
 
         /**
@@ -142,6 +290,7 @@ public class Share extends BaseActivity implements OnClickListener {
         @Override
         protected String doInBackground(String... args) {
             // TODO Auto-generated method stub
+
             // Check for success tag
             int success;
             String name = args[0];

@@ -85,8 +85,12 @@ public class SearchDetail extends BaseActivity {
             TextView description = (TextView) findViewById(R.id.descriptionText);
             description.setText(foodItem.get("description"));
 
-            ImageView image = (ImageView) findViewById(R.id.imageView);
-            Picasso.with(SearchDetail.this).load(foodItem.get("image")).into(image);
+            try {
+                ImageView image = (ImageView) findViewById(R.id.imageView);
+                Picasso.with(SearchDetail.this).load(foodItem.get("image")).into(image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
         } catch (NumberFormatException e) {
